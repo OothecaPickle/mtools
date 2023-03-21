@@ -1,7 +1,7 @@
 %define _binary_payload w9.gzdio
 Name:           mtools
 Summary:        mtools, read/write/list/format DOS disks under Unix
-Version:        4.0.41
+Version:        4.0.43
 Release:        1
 License:        GPLv3+
 Group:          Utilities/System
@@ -133,6 +133,21 @@ if [ -f %{_bindir}/install-info ] ; then
 fi
 
 %changelog
+* Tue Mar 21 2023 Alain Knaff <alain@knaff.lu>
+- Fix root directory test in mattrib
+- -b BiosDisk flag for mformat to allow setting physdrive to a user-specified
+  value
+- Clearer error message in mformat when trying to mformat a disk whose total
+  size is not known
+- Make recursive copy more consistent
+- Trailing slash now always implies target should be a directory
+- Code cleanup
+* Sat Oct 22 2022 Alain Knaff <alain@knaff.lu>
+- Added postcmd attribute in drive description to allow to
+  execute "device release" code automatically at end of command
+- Code cleanup (unneeded functions, initializations, added
+  comments to unobvious code, obsolete stuff in Makefile)
+- signedness cleanup about directory entries
 * Sun Sep 18 2022 Alain Knaff <alain@knaff.lu>
 - Made it possible again to have FAT32 filesystems with less
   than 0xfff5 clusters
