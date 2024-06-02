@@ -110,7 +110,7 @@ void dos_name(doscp_t *toDos, const char *name, int verbose UNUSEDP,
 		name = &name[2];
 
 	/* zap the leading path */
-	name = _basename(name);
+	name = mt_basename(name);
 	if ((s = strrchr(name, '\\')))
 		name = s + 1;
 
@@ -189,4 +189,28 @@ wchar_t *unix_name(doscp_t *dosCp,
 	dos_to_wchar(dosCp, ans, ret, 12);
 	return ret;
 }
+
+int isSpecial(const char *name)
+{
+	if(name[0] == '\0')
+		return 1;
+	if(!strcmp(name,"."))
+		return 1;
+	if(!strcmp(name,".."))
+		return 1;
+	return 0;
+}
+
+#ifdef HAVE_WCHAR_H
+int isSpecialW(const wchar_t *name)
+{
+	if(name[0] == '\0')
+		return 1;
+	if(!wcscmp(name,L"."))
+		return 1;
+	if(!wcscmp(name,L".."))
+		return 1;
+	return 0;
+}
+#endif
 
