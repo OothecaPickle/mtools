@@ -65,7 +65,7 @@ const char *short_illegals=";+=[]',\"*\\<>/?:|";
 const char *long_illegals = "\"*\\<>/?:|\005";
 
 /* Format a number into a string, without terminating the string */
-static void fmt_num(int num, char *base, int end, char prefix) {
+static void fmt_num(unsigned int num, char *base, int end, char prefix) {
 	for(;end;end--) {
 		base[end-1] = '0' + num % 10;
 		num = num / 10;
