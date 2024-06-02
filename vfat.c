@@ -80,7 +80,6 @@ static void autorename(char *name,
 {
 	int tildapos, dotpos;
 	unsigned int seqnum=0, maxseq=0;
-	char tmp;
 	char *p;
 
 #ifdef DEBUG
