@@ -118,9 +118,10 @@ int growDirCache(dirCache_t *cache, unsigned int slot)
 	if( cache->nr_entries <= slot) {
 		unsigned int i;
 
-		cache->entries = realloc(cache->entries,
-					 (slot+1) * 2 *
-					 sizeof(dirCacheEntry_t *));
+		cache->entries =
+			(dirCacheEntry_t **) realloc(cache->entries,
+						     (slot+1) * 2 *
+						     sizeof(dirCacheEntry_t *));
 		if(!cache->entries)
 			return -1;
 		for(i= cache->nr_entries; i < (slot+1) * 2; i++) {
