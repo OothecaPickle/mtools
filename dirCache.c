@@ -76,7 +76,7 @@ static unsigned int addBit(unsigned int *bitmap,
 	}
 }
 
-static int _addHash(dirCache_t *cache, unsigned int hash, int checkOnly)
+static int mt_addHash(dirCache_t *cache, unsigned int hash, int checkOnly)
 {
 	return
 		addBit(cache->bm0, hash, checkOnly) &&
@@ -87,7 +87,7 @@ static int _addHash(dirCache_t *cache, unsigned int hash, int checkOnly)
 
 static void addNameToHash(dirCache_t *cache, wchar_t *name)
 {
-	_addHash(cache, calcHash(name), 0);
+	mt_addHash(cache, calcHash(name), 0);
 }
 
 static void hashDce(dirCache_t *cache, dirCacheEntry_t *dce)
@@ -104,7 +104,7 @@ int isHashed(dirCache_t *cache, wchar_t *name)
 {
 	int ret;
 
-	ret =  _addHash(cache, calcHash(name), 1);
+	ret =  mt_addHash(cache, calcHash(name), 1);
 	return ret;
 }
 
