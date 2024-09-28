@@ -1,7 +1,7 @@
 %define _binary_payload w9.gzdio
 Name:           mtools
 Summary:        mtools, read/write/list/format DOS disks under Unix
-Version:        4.0.41
+Version:        4.0.45
 Release:        1
 License:        GPLv3+
 Group:          Utilities/System
@@ -133,6 +133,33 @@ if [ -f %{_bindir}/install-info ] ; then
 fi
 
 %changelog
+* Sat Sep 28 2024 Alain Knaff <alain@knaff.lu>
+- Fixed iconv descriptor leak
+- Fixed size of error message buffer
+* Sun Jun 02 2024 Alain Knaff <alain@knaff.lu>
+- Added documentation for size parameters
+- Fix parsing of fat_start (reserved sectors) in mformat.c so
+  as to allow more than 255
+- Rewrite autorename in vfat.c such that it doesn't
+  (temporarily) overwrite byte after name string
+- Switch statement fall-through fixes (size parsing, and bios disk in
+  mformat.c)
+- Compilation warning fixes, mostly for CLANG
+* Tue Mar 21 2023 Alain Knaff <alain@knaff.lu>
+- Fix root directory test in mattrib
+- -b BiosDisk flag for mformat to allow setting physdrive to a user-specified
+  value
+- Clearer error message in mformat when trying to mformat a disk whose total
+  size is not known
+- Make recursive copy more consistent
+- Trailing slash now always implies target should be a directory
+- Code cleanup
+* Sat Oct 22 2022 Alain Knaff <alain@knaff.lu>
+- Added postcmd attribute in drive description to allow to
+  execute "device release" code automatically at end of command
+- Code cleanup (unneeded functions, initializations, added
+  comments to unobvious code, obsolete stuff in Makefile)
+- signedness cleanup about directory entries
 * Sun Sep 18 2022 Alain Knaff <alain@knaff.lu>
 - Made it possible again to have FAT32 filesystems with less
   than 0xfff5 clusters

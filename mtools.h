@@ -94,7 +94,7 @@ FILE *opentty(int mode);
 
 int is_dir(Stream_t *Dir, char *path);
 
-int dir_grow(Stream_t *Dir, int size);
+int dir_grow(Stream_t *Dir, unsigned int size);
 
 void *safe_malloc(size_t size);
 Stream_t *open_dos2unix(Stream_t *Next,int convertCharset);
@@ -167,9 +167,8 @@ char get_default_drive(void);
 void set_cmd_line_image(char *img);
 void check_number_parse_errno(char c, const char *optarg, char *endptr);
 void read_config(void);
-off_t str_to_offset_with_end(const char *str, char **endp);
 mt_off_t str_to_off_with_end(const char *str, char **endp);
-off_t str_to_offset(char *str);
+mt_off_t str_to_offset(char *str);
 uint32_t parseSize(char *sizeStr);
 unsigned int strtoui(const char *nptr, char **endptr, int base);
 unsigned int atoui(const char *nptr);
