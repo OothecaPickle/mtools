@@ -20,7 +20,6 @@
 
 #include "sysincludes.h"
 #include "mtools.h"
-#include "mainloop.h"
 #include "fsP.h"
 #include "file.h"
 #include "plain_io.h"
@@ -484,6 +483,7 @@ void mpartition(int argc, char **argv, int dummy UNUSEDP)
 				perror("read MBR");
 				exit(1);
 			}
+			close(fd);
 		}
 		memset((char *)(partTable+1), 0, 4*sizeof(*partTable));
 		set_word(((unsigned char*)buf)+510, 0xaa55);
