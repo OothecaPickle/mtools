@@ -168,7 +168,7 @@ static inline void inst_boot_prg(union bootsector *boot, uint16_t offset)
 	  boot->boot.jump[1] = (uint8_t) (offset - 3);
 	  boot->boot.jump[2] = (uint8_t) ( (offset - 3) >> 8);
 	}
-	set_word(boot->boot.jump + offset + 20, offset + 24);
+	set_word(boot->bytes + offset + 20, offset + 24);
 }
 
 /* Set up the root directory */
