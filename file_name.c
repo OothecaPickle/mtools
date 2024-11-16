@@ -186,7 +186,7 @@ wchar_t *unix_name(doscp_t *dosCp,
 		strcpy(ans, tname);
 
 	/* fix special characters (above 0x80) */
-	dos_to_wchar(dosCp, ans, ret, 12);
+	dos_to_wchar(dosCp, ans, ret, strlen(ans));
 	return ret;
 }
 
