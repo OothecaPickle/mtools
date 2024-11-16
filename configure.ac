@@ -249,7 +249,6 @@ if [ $host_os1 != $host_os3 ] && [ $host_os2 != $host_os3 ] ; then
 fi
 
 my_host_os=`echo $host_os1 $host_os2 $host_os3 | sort -u`
-objs=`echo $srcdir/*.c | sed 's/\.c$/.o/' `
 if [ "X$GCC" = "Xyes" ] ; then
     if [ "$host_os3" = aux ] ; then
 	    CFLAGS="$CFLAGS -ZP"
