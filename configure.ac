@@ -142,7 +142,7 @@ AC_CHECK_SIZEOF(int)
 
 seek_function=
 
-if test "0$$ac_cv_sizeof_off_t" -ge 8 ; then
+if test "0$ac_cv_sizeof_off_t" -ge 8 ; then
    seek_function=lseek
 fi
 
