@@ -36,9 +36,9 @@ char *unix_normalize (doscp_t *cp, char *ans, dos_name_t *dn, size_t ans_size)
 		for (j=0; j<3 && dn->ext[j] > ' '; ++j,++a)
 			*a = dn->ext[j];
 	}
-	*a++ = '\0';
-	dos_to_wchar(cp, buffer, wbuffer, 13);
-	wchar_to_native(wbuffer, ans, 13, ans_size);
+	*a = '\0';
+	dos_to_wchar(cp, buffer, wbuffer, a-buffer);
+	wchar_to_native(wbuffer, ans, a-buffer, ans_size);
 	return ans;
 }
 
