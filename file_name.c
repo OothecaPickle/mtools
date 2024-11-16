@@ -28,7 +28,8 @@ char *unix_normalize (doscp_t *cp, char *ans, dos_name_t *dn, size_t ans_size)
 	wchar_t wbuffer[13];
 	char *a;
 	int j;
-
+	size_t len;
+	
 	for (a=buffer,j=0; (j<8) && (dn->base[j] > ' '); ++j,++a)
 		*a = dn->base[j];
 	if(dn->ext[0] > ' ') {
@@ -37,8 +38,9 @@ char *unix_normalize (doscp_t *cp, char *ans, dos_name_t *dn, size_t ans_size)
 			*a = dn->ext[j];
 	}
 	*a = '\0';
-	dos_to_wchar(cp, buffer, wbuffer, a-buffer);
-	wchar_to_native(wbuffer, ans, a-buffer, ans_size);
+	len = (size_t)(a-buffer);
+	dos_to_wchar(cp, buffer, wbuffer, len);
+	wchar_to_native(wbuffer, ans, len, ans_size);
 	return ans;
 }
 
