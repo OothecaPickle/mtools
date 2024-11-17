@@ -53,12 +53,12 @@ static void set_mtime(const char *target, time_t mtime)
 			time_t actime;       /* access time */
 			time_t modtime;      /* modification time */
 		};
-/* #endif		 */
-/* 		struct utimbuf utbuf; */
+#endif		
+		struct utimbuf utbuf;
 
-/* 		utbuf.actime = mtime; */
-/* 		utbuf.modtime = mtime; */
-/* 		utime(target, &utbuf); */
+		utbuf.actime = mtime;
+		utbuf.modtime = mtime;
+		utime(target, &utbuf);
 #endif
 #endif
 	}
