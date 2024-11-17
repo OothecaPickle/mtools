@@ -132,7 +132,6 @@ AC_TYPE_OFF_T
 AC_TYPE_UID_T
 AC_TYPE_PID_T
 
-AC_CHECK_TYPES(caddr_t)
 AC_CHECK_TYPES(long long)
 AC_CHECK_SIZEOF(size_t)
 AC_CHECK_SIZEOF(off_t)
@@ -218,7 +217,7 @@ AC_STRUCT_TM
 
 dnl Checks for library functions.
 
-AC_CHECK_FUNCS(strerror random srandom strchr strrchr lockf flock \
+AC_CHECK_FUNCS(strerror lrand48 srand48 strchr strrchr lockf flock \
 strcasecmp strncasecmp strnlen atexit on_exit getpass memmove \
 strdup strndup strcspn strspn strtoul strtol strtoll strtoui \
 memcpy strpbrk memset setenv seteuid setresuid \
@@ -231,7 +230,9 @@ alarm sigaction usleep lstat unsetenv mkdir)
 AC_CHECK_FUNCS(utimes utime, [break])
 AC_CHECK_FUNCS(tzset gettimeofday)
 
-AC_CHECK_DECLS([sys_errlist, optarg])
+AC_CHECK_DECLS([sys_errlist, errno],,,[AC_INCLUDES_DEFAULT
+#include <errno.h>])
+AC_CHECK_DECLS([optarg])
 
 [
 host_os0=`echo $host_os | sed 's/-/_/g'`

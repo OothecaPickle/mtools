@@ -83,11 +83,6 @@ ac_cv_func_setpgrp_void=yes ../mtools/configure --build=i386-linux-gnu --host=i3
 #endif
 #endif
 
-#ifndef HAVE_CADDR_T
-typedef void *caddr_t;
-#endif
-
-
 /***********************************************************************/
 /*                                                                     */
 /* Compiler dependencies                                               */
@@ -288,7 +283,7 @@ extern int ioctl(int fildes, int request, void *arg);
 #endif
 
 #include <errno.h>
-#ifndef errno
+#if !HAVE_DECL_ERRNO
 extern int errno;
 #endif
 
@@ -404,12 +399,12 @@ size_t wcsnlen(const wchar_t *wcs, size_t l);
 # endif
 #endif
 
-#ifndef HAVE_RANDOM
-# ifdef OS_mingw32msvc
-#  define random (long)rand
-# else
-#  define random (long)lrand48
-# endif
+#ifndef HAVE_SRAND48
+#  define srand48 srand
+#endif
+
+#ifndef HAVE_LRAND48
+#  define lrand48 rand
 #endif
 
 #ifndef HAVE_STRCHR
