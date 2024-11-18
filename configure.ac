@@ -16,6 +16,8 @@ dnl along with Mtools.  If not, see <http://www.gnu.org/licenses/>.
 dnl
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT
+AC_USE_SYSTEM_EXTENSIONS dnl for strndup
+AC_DEFINE([_BSD_SOURCE],[1],[Needed for strcasecmp])
 AC_CONFIG_SRCDIR([buffer.c])
 AC_CONFIG_HEADERS([config.h])
 
