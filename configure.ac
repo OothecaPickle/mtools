@@ -330,7 +330,16 @@ if test X$use_floppyd = Xyes; then
     AC_CHECK_FUNCS(setpgrp getuserid getgroupid)
     AC_FUNC_SETPGRP
 
-    FLOPPYD_LIBS="$X_LIBS -lX11 -lXau"
+    FLOPPYD_LIBS="-lX11"
+    saved_LDFLAGS="$LDFLAGS"
+    if test -n "$x_libraries"; then
+	# Arrange for directory for X11 libraries to be included in
+	# linker command line. Why does autoconf not provide a cleaner
+	# way to achieve this?
+	LDFLAGS="$LDFLAGS -L$x_libraries"
+    fi
+    AC_CHECK_LIB(Xau, XauFileName, [ FLOPPYD_LIBS="-lXau $FLOPPYD_LIBS" ])
+    LDFLAGS="$saved_LDFLAGS"
     AC_PATH_XTRA
     AC_CHECK_HEADERS(sys/socket.h arpa/inet.h netdb.h netinet/in.h \
                      netinet/tcp.h X11/Xauth.h X11/Xlib.h)
