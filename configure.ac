@@ -330,9 +330,7 @@ if test X$use_floppyd = Xyes; then
     AC_CHECK_FUNCS(setpgrp getuserid getgroupid)
     AC_FUNC_SETPGRP
 
-    FLOPPYD_LIBS=""
-    AC_CHECK_LIB(X11, XOpenDisplay, [ FLOPPYD_LIBS="$X_LIBS -lX11 $FLOPPYD_LIBS" ])
-    AC_CHECK_LIB(Xau, XauFileName, [ FLOPPYD_LIBS="$X_LIBS -lXau $FLOPPYD_LIBS" ])
+    FLOPPYD_LIBS="$X_LIBS -lX11 -lXau"
     AC_PATH_XTRA
     AC_CHECK_HEADERS(sys/socket.h arpa/inet.h netdb.h netinet/in.h \
                      netinet/tcp.h X11/Xauth.h X11/Xlib.h)
