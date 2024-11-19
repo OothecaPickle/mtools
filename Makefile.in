@@ -121,7 +121,7 @@ swap.c unix2dos.s unixdir.c tty.c vfat.c mkmanifest.c			\
 
 SCRIPTS = mcheck mxtar uz tgz mcomp amuFormat.sh
 
-LINKS=mattrib mcat mcd mcopy mdel mdeltree mdir mdu	\
+LINKS=mattrib mcat mcd mcopy mdel mdeltree mdir mdoctorfat mdu	\
 mformat minfo mlabel mmd mmount mmove mpartition mrd mren mtype	\
 mtoolstest mshortname mshowfat mbadblocks mzip
 
