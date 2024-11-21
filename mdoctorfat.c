@@ -83,6 +83,8 @@ void mdoctorfat(int argc, char **argv, int mtype UNUSEDP)
 	int i;
 	unsigned int offset;
 
+	noPrivileges=1;
+
 	/* get command line options */
 
 	init_clash_handling(& arg.ch);
