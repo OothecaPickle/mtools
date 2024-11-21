@@ -22,6 +22,7 @@ mcat - dump raw disk image
 mcopy - copy MSDOS files to/from Unix
 mdel - delete an MSDOS file
 mdeltree - recursively delete an MSDOS directory and its contents
+mdoctorfat - doctors the allocation table of a file
 mdir - display an MSDOS directory
 mdu - display the amount of space occupied by an MSDOS directory
 mformat - add an MSDOS filesystem to a low-level formatted floppy disk

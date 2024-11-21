@@ -108,6 +108,8 @@ typedef struct Xdf_t {
 	unsigned int stretch:1;
 	unsigned int rootskip:1;
 	signed  int drive:4;
+
+	const char *postcmd;
 } Xdf_t;
 
 typedef struct {
@@ -216,7 +218,7 @@ static int add_to_request(Xdf_t *This, unsigned char ptr,
 		RR_SETSIZECODE(request+(*nr), REC.sizecode);
 		RR_SETDIRECTION(request+(*nr), direction);
 		RR_SETDATA(request+(*nr),
-			   (caddr_t) This->buffer + ptr * This->sector_size);
+			   (void *) This->buffer + ptr * This->sector_size);
 		(*nr)++;
 	}
 	compactify->ptr = ptr;
@@ -426,7 +428,7 @@ static int decompose(Xdf_t *This, mt_off_t iwhere, size_t len,
 	uint32_t track_size = This->track_size * 1024;
 
 	smt_off_t track = (smt_off_t) iwhere / track_size;
-	uint32_t where = (smt_off_t) iwhere % track_size;
+	uint32_t where = (uint32_t) ((smt_off_t) iwhere % track_size);
 
 	*begin = where;
 	if(where + len > track_size)
@@ -557,10 +559,13 @@ static int xdf_flush(Stream_t *Stream)
 
 static int xdf_free(Stream_t *Stream)
 {
+	int ret;
 	DeclareThis(Xdf_t);
 	Free(This->track_map);
 	Free(This->buffer);
-	return close(This->fd);
+	ret = close(This->fd);
+	postcmd(This->postcmd);
+	return ret;
 }
 
 
@@ -645,8 +650,12 @@ Stream_t *XdfOpen(struct device *dev, const char *name,
 
 	This->sector_size = 512;
 	This->stretch = 0;
+	This->postcmd = 0;
 
 	precmd(dev);
+	if(dev)
+		This->postcmd = dev->postcmd;
+
 	This->fd = open(name,
 			((mode | dev->mode) & ~O_ACCMODE) |
 			O_EXCL | O_NDELAY | O_RDWR);
@@ -659,7 +668,7 @@ Stream_t *XdfOpen(struct device *dev, const char *name,
 		goto exit_0;
 	}
 	closeExec(This->fd);
-
+	
 	This->drive = GET_DRIVE(This->fd);
 	if(This->drive < 0)
 		goto exit_1;

@@ -42,14 +42,12 @@ static const struct dispatch {
 	{"mmount",mmount, 0},
 	{"mpartition",mpartition, 0},
 	{"mrd",mdel, 1},
-	{"mread",mcopy, 0},
 	{"mmove",mmove, 0},
 	{"mren",mmove, 1},
 	{"mshowfat", mshowfat, 0},
 	{"mshortname", mshortname, 0},
 	{"mtoolstest", mtoolstest, 0},
 	{"mtype",mcopy, 1},
-	{"mwrite",mcopy, 0},
 	{"mzip", mzip, 0}
 };
 #define NDISPATCH (sizeof dispatch / sizeof dispatch[0])
@@ -107,9 +105,9 @@ int main(int argc,char **argv)
        argv[0] = _getname(argv[0]); _remext(argv[0]); name = argv[0];
 #else
 #ifdef OS_mingw32msvc
-	_stripexe(argv[0]);
+	mt_stripexe(argv[0]);
 #endif
-	name = _basename(argv[0]);
+	name = mt_basename(argv[0]);
 #endif
 	progname = argv[0];
 
