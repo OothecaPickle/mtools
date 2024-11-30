@@ -586,8 +586,12 @@ Stream_t *FloppydOpen(struct device *dev,
 	}
 
 	if(floppyd_open(This, mode) < 0) {
-		sprintf(errmsg,
-			"Can't open remote drive: %s", strerror(errno));
+		if(errno == EINTR)
+			sprintf(errmsg,
+				"Can't open remote drive: Device in use");
+		else
+			sprintf(errmsg,
+				"Can't open remote drive: %s", strerror(errno));
 		close(This->fd);
 		Free(This);
 		return NULL;
