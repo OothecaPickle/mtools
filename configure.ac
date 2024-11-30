@@ -16,19 +16,22 @@ dnl along with Mtools.  If not, see <http://www.gnu.org/licenses/>.
 dnl
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT
-AC_USE_SYSTEM_EXTENSIONS dnl for strndup
+
 AC_CONFIG_SRCDIR([buffer.c])
-AC_CONFIG_HEADERS([config.h])
+
+AC_USE_SYSTEM_EXTENSIONS dnl for strndup
 
 dnl Checks for compiler
 AC_PROG_CC
+
+dnl Get canonical host
+AC_CANONICAL_HOST
+
 AC_PROG_INSTALL
 AC_PROG_LN_S
 
 AC_PATH_PROG(INSTALL_INFO, install-info, "")
 
-dnl Check for Systems
-AC_CANONICAL_TARGET
 
 AC_C_CONST
 AC_C_INLINE
@@ -236,21 +239,22 @@ AC_CHECK_DECLS([sys_errlist, errno],,,[AC_INCLUDES_DEFAULT
 AC_CHECK_DECLS([optarg])
 
 [
+echo "Host OS=$host_os"
 host_os0=`echo $host_os | sed 's/-/_/g'`
-host_os1=`echo $host_os0 | sed 's/\./_/g'`
-host_os2=`echo $host_os0 | sed 's/^\([^.]*\)\..*$/\1/g'`
-host_os3=`echo $host_os2 | sed 's/^\([^0-9]*\)[0-9]*$/\1/g'`
+host_os1=`echo "$host_os0" | sed 's/\./_/g'`
+host_os2=`echo "$host_os0" | sed 's/^\([^.]*\)\..*$/\1/g'`
+host_os3=`echo "$host_os2" | sed 's/^\([^0-9]*\)[0-9]*$/\1/g'`
 host_cpu1=`echo $host_cpu | sed 's/\./_/g'`
 host_vendor1=`echo $host_vendor | sed 's/\./_/g'`
 HOST_ID="-DCPU_$host_cpu1 -DVENDOR_$host_vendor1 -DOS_$host_os1"
-if [ $host_os1 != $host_os2 ] ; then
+if [ "$host_os1" != "$host_os2" ] ; then
 	HOST_ID="$HOST_ID -DOS_$host_os2"
 fi
-if [ $host_os1 != $host_os3 ] && [ $host_os2 != $host_os3 ] ; then
+if [ "$host_os1" != "$host_os3" ] && [ "$host_os2" != "$host_os3" ] ; then
 	HOST_ID="$HOST_ID -DOS_$host_os3"
 fi
 
-my_host_os=`echo $host_os1 $host_os2 $host_os3 | sort -u`
+my_host_os=`echo "$host_os1" "$host_os2" "$host_os3" | sort -u`
 if [ "X$GCC" = "Xyes" ] ; then
     if [ "$host_os3" = aux ] ; then
 	    CFLAGS="$CFLAGS -ZP"
@@ -260,39 +264,39 @@ if [ "X$GCC" = "Xyes" ] ; then
        arm*-*-linux) CFLAGS="$CFLAGS -mstructure-size-boundary=8";;
     esac
 else
-    if [ $host_os3 = hpux ] ; then
+    if [ "$host_os3" = hpux ] ; then
 	    CPPFLAGS="$CPPFLAGS -Ae"
     fi
 
-    if [ $host_os3 = xenix ] ; then
+    if [ "$host_os3" = xenix ] ; then
 	    CFLAGS="$CFLAGS -M2e"
     fi
 fi
 
-if [ $host_os3 = hpux ] ; then
+if [ "$host_os3" = hpux ] ; then
 	    LDFLAGS="$LDFLAGS -z"
 fi
 
-if [ $host_os3 = xenix ] ; then
+if [ "$host_os3" = xenix ] ; then
     LDFLAGS="$LDFLAGS -M2e -i -f 5000"
 fi
 
-if [ $host_os2 = sysv4 ] ; then
+if [ "$host_os2" = sysv4 ] ; then
     SHLIB="-lc -L/usr/ucblib -lucb"
 else
     SHLIB=""
 fi
 
-if [ $host_os3 = isc ] ; then
+if [ "$host_os3" = isc ] ; then
     CFLAGS="$CFLAGS -D_SYSV3"
     SHLIB="-lc_s"
 fi
 
-if [ $host_os3 = solaris -a x$newVold = xxyes ] ; then
+if [ "$host_os3" = solaris -a x$newVold = xxyes ] ; then
     SHLIB="$SHLIB -s -lvolmgt"
 fi
 
-if [ $host_os3 = nextstep ] ; then
+if [ "$host_os3" = nextstep ] ; then
     CFLAGS="$CFLAGS -DBSD"
     SHLIB=""
 fi
@@ -366,4 +370,5 @@ AC_SUBST(SHLIB)
 AC_SUBST(host_cpu)
 AC_SUBST(HOST_ID)
 AC_CONFIG_FILES([Makefile])
+AC_CONFIG_HEADERS([config.h])
 AC_OUTPUT
