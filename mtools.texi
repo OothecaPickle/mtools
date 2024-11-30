@@ -1298,7 +1298,7 @@ description of those.
 to clients running on a remote machine, just as an X server grants
 access to the display to remote clients.  It has the following syntax:
 
-@code{floppyd} [@code{-d}] [@code{-l}] [@code{-s} @var{port}] [@code{-r}
+@code{floppyd} [@code{-d}] [@code{-D}] [@code{-l}] [@code{-s} @var{port}] [@code{-r}
 @var{user}] [@code{-b} @var{ipaddr}] [@code{-x} @var{display}] @var{devicenames}
 
 
@@ -1333,8 +1333,11 @@ probing those display names with the @code{-l} option.
 
 @table @code
 @item d
-Daemon mode. Floppyd runs its own server loop.  Do not supply this if
+Server mode. Floppyd runs its own server loop.  Do not supply this if
 you start floppyd from @code{inetd.conf}
+@item D
+Do not daemonize. Floppyd will not put itself into the background even
+if started in server mode.
 @item s  @var{port}
 Port number for daemon mode.  Default is 5703 + @var{displaynumber}.
 This flag implies daemon mode.  For example, for display
