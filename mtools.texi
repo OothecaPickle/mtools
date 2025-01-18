@@ -1659,7 +1659,7 @@ No confirmation when overwriting Unix files.  @code{ASCII} doesn't
 warn the user when overwriting an existing Unix file. If the target
 file already exists, and the @code{-n} option is not in effect,
 @code{mcopy} asks whether to overwrite the file or to rename the new
-file (see @ref{name clashes}) for details).  In order to switch off
+file (see @ref{name clashes} for details).  In order to switch off
 confirmation for DOS files, use @code{-o}.
 @item m
 Preserve the file modification time.
