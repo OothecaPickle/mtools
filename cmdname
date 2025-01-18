@@ -15,7 +15,7 @@
 # along with Mtools.  If not, see <http://www.gnu.org/licenses/>.
 floppyd - floppy daemon for remote access to floppy drive
 floppyd_installtest - tests whether floppyd is installed and running
-mattrib - change MSDOS file attribute flags
+mattrib - change MSDOS file attribute tags
 mbadblocks - tests a floppy disk, and marks the bad blocks in the FAT
 mcd - change MSDOS directory
 mcat - dump raw disk image
