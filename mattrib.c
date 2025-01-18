@@ -16,7 +16,7 @@
  *  along with Mtools.  If not, see <http://www.gnu.org/licenses/>.
  *
  * mattrib.c
- * Change MSDOS file attribute flags
+ * Change MSDOS file attribute tags
  */
 
 #include "sysincludes.h"
