@@ -111,6 +111,13 @@ int unix_loop(Stream_t *Stream UNUSEDP, MainParam_t *mp,
 	mp->loop = mt_unix_loop;
 	if((mp->lookupflags & DO_OPEN)){
 		mp->File = SimpleFileOpen(0, 0, arg, O_RDONLY, 0, 0, 0, 0);
+#ifdef OS_mingw32msvc
+		/* SimpleFileOpen can't open a dir on windows, so try that too.
+		 * A bit wasteful, because mp->File will be free'd and assigned
+		 * again as OpenDir(arg), but not perf-critical, so KISS. */
+		if(!mp->File)
+			mp->File = OpenDir(arg);
+#endif
 		if(!mp->File){
 			perror(arg);
 #if 0
