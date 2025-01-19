@@ -1,7 +1,7 @@
 %define _binary_payload w9.gzdio
 Name:           mtools
 Summary:        mtools, read/write/list/format DOS disks under Unix
-Version:        4.0.46
+Version:        4.0.47
 Release:        1
 License:        GPLv3+
 Group:          Utilities/System
@@ -135,6 +135,12 @@ if [ -f %{_bindir}/install-info ] ; then
 fi
 
 %changelog
+* Sun Jan 19 2025 Alain Knaff <alain@knaff.lu>
+- fixed some of the manpage issues reported by manpage-l10n
+- unix-dir copying on Windows fix
+- new no-daemon mode for floppyd to make testing easier
+- make floppyd independant of XauFileName (portability)
+- autoconf fixes
 * Thu Nov 21 2024 Alain Knaff <alain@knaff.lu>
 - iconv buffer overflow fixes
 - removed references to mread and mwrite (obsolete subcommands
