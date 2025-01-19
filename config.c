@@ -535,7 +535,7 @@ static void finish_drive_clause(void)
 #endif
 
 static int set_var(struct switches_l *switches, int nr,
-		   void * base_address)
+		   char * base_address)
 {
     int i;
     for(i=0; i < nr; i++) {
