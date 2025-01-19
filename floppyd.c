@@ -109,7 +109,7 @@
 
 unsigned int mtools_lock_timeout=30;
 
-unsigned int daemonize = 1;
+static unsigned int daemonize = 1;
 
 void serve_client(int sock, const char *const*device_name, unsigned int n_dev,
 		  int close_stderr);
