@@ -18,7 +18,9 @@
  *  along with Mtools.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
 #include "mtoolsDirentry.h"
 
 typedef struct bounded_string {
