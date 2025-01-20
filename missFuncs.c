@@ -52,7 +52,7 @@ char *strndup( const char *s, size_t n )
     if ( !s )
         return 0;
 
-    nAvail = min( strlen(s) + 1, n + 1 );
+    nAvail = mt_min( strlen(s) + 1, n + 1 );
     p      = malloc( nAvail );
     if ( !p )
 	    return 0;

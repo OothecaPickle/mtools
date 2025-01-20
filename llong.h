@@ -115,10 +115,9 @@ typedef struct {
 # endif
 #endif
 
-
-#define min(a,b) ((a) < (b) ? (a) : (b))
+#define mt_min(a,b) ((a) < (b) ? (a) : (b))
 #define MAX_OFF_T_B(bits) \
-	((((mt_off_t) 1 << min(bits-1, sizeof(mt_off_t)*8 - 2)) -1) << 1 | 1)
+	((((mt_off_t) 1 << mt_min(bits-1, sizeof(mt_off_t)*8 - 2)) -1) << 1 | 1)
 
 #if defined(HAVE_LLSEEK) || defined(HAVE_LSEEK64)
 # define SEEK_BITS 63
