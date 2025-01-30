@@ -237,7 +237,11 @@ char getDrive(Stream_t *Stream);
 
 
 void printOom(void);
-int ask_confirmation(const char *, ...)  __attribute__ ((format (printf, 1, 2)));
+int ask_confirmation(const char *, ...)
+#if defined __GNUC__
+    __attribute__ ((format (printf, 1, 2)))
+#endif
+;
 
 int helpFlag(int, char **);
 
