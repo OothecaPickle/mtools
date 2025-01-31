@@ -177,12 +177,15 @@ FILE *opentty(int mode
 {
 	if(notty)
 		return NULL;
+
+#ifndef OS_mingw32msvc  /* Windows /dev/tty is not virtual */
 	if (tty == NULL) {
 		ttyfd = open("/dev/tty", O_RDONLY);
 		if(ttyfd >= 0) {
 			tty = fdopen(ttyfd, "r");
 		}
 	}
+#endif
 	if  (tty == NULL){
 		if ( !isatty(0) ){
 			notty = 1;
