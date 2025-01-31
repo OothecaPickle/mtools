@@ -540,6 +540,8 @@ static int set_var(struct switches_l *switches, int nr,
     int i;
     for(i=0; i < nr; i++) {
 	if(match_token(switches[i].name)) {
+	    char *ptr = base_address+(size_t)switches[i].address;
+
 	    expect_char('=');
 	    /* All pointers cast back to pointers with alignment
 	     * constraints were such pointers with alignment
@@ -547,26 +549,20 @@ static int set_var(struct switches_l *switches, int nr,
 	     * constraint */
 
 	    if(switches[i].type == T_UINT)
-		* ((unsigned int *)((long)switches[i].address+base_address)) =
+		* ((unsigned int *)ptr) =
 		    (unsigned int) get_unumber(UINT_MAX);
 	    else if(switches[i].type == T_UINT8)
-		* ((uint8_t *)((long)switches[i].address+base_address)) =
-		    (uint8_t) get_unumber(UINT8_MAX);
+		* ((uint8_t *)ptr) = (uint8_t) get_unumber(UINT8_MAX);
 	    else if(switches[i].type == T_UINT16)
-		* ((uint16_t *)((long)switches[i].address+base_address)) =
-		    (uint16_t) get_unumber(UINT16_MAX);
+		* ((uint16_t *)ptr) =(uint16_t) get_unumber(UINT16_MAX);
 	    else if(switches[i].type == T_INT)
-		* ((int *)((long)switches[i].address+base_address)) =
-		    get_number();
+		* ((int *)ptr) = get_number();
 	    else if (switches[i].type == T_STRING)
-		* ((char**)((long)switches[i].address+base_address))=
-		    get_string();
+		* ((char**)ptr)= get_string();
 	    else if (switches[i].type == T_UQSTRING)
-		* ((char**)((long)switches[i].address+base_address))=
-		    get_unquoted_string();
+		* ((char**)ptr)= get_unquoted_string();
 	    else if (switches[i].type == T_OFFS)
-		* ((mt_off_t*)((long)switches[i].address+base_address))=
-		    get_offset();
+		* ((mt_off_t*)ptr)= get_offset();
 	    return 0;
 	}
     }
