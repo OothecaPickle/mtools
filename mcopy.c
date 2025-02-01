@@ -569,16 +569,21 @@ static int unix_to_dos(MainParam_t *mp)
 	return dos_write(0, mp, 1);
 }
 
-static void usage(int ret) NORETURN;
-static void usage(int ret)
+static void usage(int mtype, int ret) NORETURN;
+static void usage(int mtype, int ret)
 {
 	fprintf(stderr,
 		"Mtools version %s, dated %s\n", mversion, mdate);
-	fprintf(stderr,
-		"Usage: %s [-spatnmQVBT] [-D clash_option] sourcefile targetfile\n", progname);
-	fprintf(stderr,
-		"       %s [-spatnmQVBT] [-D clash_option] sourcefile [sourcefiles...] targetdirectory\n",
-		progname);
+	if(mtype) {
+	    fprintf(stderr,
+		    "Usage: %s [-ts] file [ files... ]\n", progname);
+	} else {
+	    fprintf(stderr,
+		    "Usage: %s [-spatnmQVBT] [-D clash_option] sourcefile targetfile\n", progname);
+	    fprintf(stderr,
+		    "       %s [-spatnmQVBT] [-D clash_option] sourcefile [sourcefiles...] targetdirectory\n",
+		    progname);
+	}
 	exit(ret);
 }
 
@@ -604,7 +609,7 @@ void mcopy(int argc, char **argv, int mtype)
 	arg.type = mtype;
 	fastquit = 0;
 	if(helpFlag(argc, argv))
-		usage(0);
+		usage(mtype, 0);
 	while ((c = getopt(argc, argv, "i:abB/sptTnmvQD:oh")) != EOF) {
 		switch (c) {
 			case 'i':
@@ -645,12 +650,12 @@ void mcopy(int argc, char **argv, int mtype)
 				break;
 			case 'D':
 				if(handle_clash_options(&arg.ch, *optarg))
-					usage(1);
+					usage(mtype, 1);
 				break;
 			case 'h':
-				usage(0);
+				usage(mtype, 0);
 			case '?':
-				usage(1);
+				usage(mtype, 1);
 			default:
 				break;
 
@@ -658,7 +663,7 @@ void mcopy(int argc, char **argv, int mtype)
 	}
 
 	if (argc - optind < 1)
-		usage(1);
+		usage(mtype, 1);
 
 	init_mp(&arg.mp);
 	arg.unixTarget = 0;
