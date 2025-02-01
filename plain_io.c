@@ -317,6 +317,9 @@ APIRET rc;
 			This->fd = 0;
 		else
 			This->fd = 1;
+#if defined(OS_mingw32msvc)  /* Windows defaults to text mode */
+		_setmode(This->fd, _O_BINARY);
+#endif
 		This->seekable = 0;
 		if (MT_FSTAT(This->fd, &This->statbuf) < 0) {
 		    Free(This);
