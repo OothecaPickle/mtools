@@ -122,6 +122,7 @@ int main(int argc,char **argv)
 		argc-=2;
 		argv+=2;
 		name = argv[0];
+		progname = argv[0];
 	}
 
 
