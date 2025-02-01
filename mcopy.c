@@ -682,7 +682,6 @@ void mcopy(int argc, char **argv, int mtype)
 
 	if(mtype){
 		/* Mtype = copying to stdout */
-		arg.mp.targetName = strdup("-");
 		arg.unixTarget = strdup("");
 		arg.mp.callback = dos_to_unix;
 		arg.mp.dirCallback = unix_copydir;
