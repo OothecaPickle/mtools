@@ -118,7 +118,7 @@ int main(int argc,char **argv)
 
 	if(argc >= 3 &&
 	   !strcmp(argv[1], "-c") &&
-	   !strcmp(name, "mtools")) {
+	   !strcasecmp(name, "mtools")) {
 		argc-=2;
 		argv+=2;
 		name = argv[0];
@@ -164,10 +164,10 @@ int main(int argc,char **argv)
 	read_config();
 	setup_signal();
 	for (i = 0; i < NDISPATCH; i++) {
-		if (!strcmp(name,dispatch[i].cmd))
+		if (!strcasecmp(name,dispatch[i].cmd))
 			dispatch[i].fn(argc, argv, dispatch[i].type);
 	}
-	if (strcmp(name,"mtools"))
+	if (strcasecmp(name,"mtools"))
 		fprintf(stderr,"Unknown mtools command '%s'\n",name);
 	fprintf(stderr,"Supported commands:");
 	for (i = 0; i < NDISPATCH; i++) {
