@@ -200,7 +200,7 @@ mtools.5: mtools.tmpl.5 Makefile
 	sed "s%SYSCONFDIR%$(sysconfdir)/%g" $< >mtools.5
 
 mtools.tmpl.1 mtools.tmpl.5 ${MAN1A}: mkmanpages mtools.texi
-	$<
+	bash $<
 
 sysconfdir.texi:
 	echo "@set SYSCONFDIR $(sysconfdir)/" >sysconfdir.texi
