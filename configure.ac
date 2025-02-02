@@ -114,7 +114,8 @@ AC_CHECK_HEADERS(getopt.h stdarg.h \
 libc.h fcntl.h limits.h sys/file.h sys/ioctl.h time.h sys/time.h \
 sys/param.h memory.h malloc.h io.h signal.h sys/signal.h utime.h sgtty.h \
 sys/floppy.h mntent.h sys/sysmacros.h assert.h \
-iconv.h wctype.h wchar.h locale.h xlocale.h dirent.h)
+iconv.h wctype.h wchar.h locale.h xlocale.h )
+AC_CHECK_HEADERS(dirent.h direct.h, [break])
 AC_CHECK_HEADERS(termio.h sys/termio.h, [break])
 AC_CHECK_HEADERS(termios.h sys/termios.h, [break])
 
