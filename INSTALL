@@ -50,13 +50,13 @@ make
 ==================================================================
 Cross-compiling for windows, 32 bit using mingw
 
-./configure --host=i686-w64-mingw32  CC=/usr/bin/i686-w64-mingw32-gcc
+./configure --host=i686-w64-mingw32
 make
 
 ==================================================================
 Cross-compiling for windows, "64" bit using mingw
 
-./configure --host=i686-w64-mingw32  CC=/usr/bin/x86_64-w64-mingw32-gcc
+./configure --host=x86_64-w64-mingw32
 make
 
 
@@ -66,11 +66,8 @@ Open Watcom compiler
 Minimal build (with correct open watcom env of INCLUDE, PATH, etc,
 assuming sh, gnu make, etc. E.g. cygwin/msys2/w64devkit on windows):
 
-  ./configure --disable-floppyd --host=i386-pc-mingw32 CC="owcc -bnt -fo=.o"
-  make mtools mkmanifest
-  mv mtools mtools.exe
-  mv mkmanifest mkmanifest.exe
-  # Copy mtools.exe to the other names (mformat.exe, mcopy.exe, etc).
+  ./configure --host=i386-pc-mingw32 CC="owcc -bnt -fo=.o"
+  make
 
 CC option -bnt seems to targets win95+ (runs on win10), and -fo=.o
 creates .o objects (which the makefile expects) instead of .obj .
