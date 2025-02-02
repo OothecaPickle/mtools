@@ -576,7 +576,7 @@ static void usage(int mtype, int ret)
 		"Mtools version %s, dated %s\n", mversion, mdate);
 	if(mtype) {
 	    fprintf(stderr,
-		    "Usage: %s [-ts] file [ files... ]\n", progname);
+		    "Usage: %s [-ts] msdosfile [ msdosfiles... ]\n", progname);
 	} else {
 	    fprintf(stderr,
 		    "Usage: %s [-spatnmQVBT] [-D clash_option] sourcefile targetfile\n", progname);
@@ -685,7 +685,6 @@ void mcopy(int argc, char **argv, int mtype)
 		arg.unixTarget = strdup("");
 		arg.mp.callback = dos_to_unix;
 		arg.mp.dirCallback = unix_copydir;
-		arg.mp.unixcallback = unix_to_unix;
 	} else {
 		const char *target;
 		if (argc - optind == 1) {
