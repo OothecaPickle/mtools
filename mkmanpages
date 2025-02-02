@@ -16,6 +16,15 @@
 # You should have received a copy of the GNU General Public License
 # along with Mtools.  If not, see <http://www.gnu.org/licenses/>.
 
+# mkmanpages invokes a custom version of texi2roff.
+# Sources of standard texi2roff can be found at http://ftp.funet.fi/pub/TeX/CTAN/support/texi2roff/texi2roff-2.0.tar.gz
+# Custome patch at http://ftp.funet.fi/pub/TeX/CTAN/support/texi2roff/texi2roff-2.0.tar.gz
+#
+# However, if you're just interested in compiling mtools (rather than
+# working on the documentation), I'd suggest you rely on the
+# ready-made man pages and templates present in the mtools release
+# tarball instead.
+
 DIR=`dirname "$0" `
 
 # TODO
