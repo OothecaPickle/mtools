@@ -16,15 +16,17 @@
 # You should have received a copy of the GNU General Public License
 # along with Mtools.  If not, see <http://www.gnu.org/licenses/>.
 
+DIR=`dirname "$0" `
+
 # TODO
-VERSION=`cat version.texi | awk '$2 == "VERSION" {print $3}'`
-UPDATED=`cat version.texi | awk '$2 == "UPDATED" {print $3 " " $4}'`
+VERSION=`cat $DIR/version.texi | awk '$2 == "VERSION" {print $3}'`
+UPDATED=`cat $DIR/version.texi | awk '$2 == "UPDATED" {print $3 " " $4}'`
 
 # extracts the manpage for a given command out of a texinfo doc
 unset LANG
 
 date=`date +%d%b%y`
-package="mtools-"`grep mversion patchlevel.c | sed 's/^.*"\(.*\)";/\1/'`
+package="mtools-"`grep mversion $DIR/patchlevel.c | sed 's/^.*"\(.*\)";/\1/'`
 
 infile=/tmp/infile.$$
 
@@ -40,10 +42,10 @@ extract()
 # '
   echo .TH\ $command\ 1\ \"$date\" $package
   echo .SH Name
-  egrep -i "^$command " cmdname | fgrep -v '#'
+  egrep -i "^$command " $DIR/cmdname | fgrep -v '#'
   #echo ".SH Description"
   
-  cat man-warning.texi mtools.texi man-warning-end.texi |
+  cat $DIR/man-warning.texi $DIR/mtools.texi $DIR/man-warning-end.texi |
   egrep -v '@end copying|@copying|@insertcopying' |
   sed \
    -e "/^@c\(omment\)\? skipskipskip/,/^@node $command/d" \
@@ -57,7 +59,7 @@ extract()
    -e 's/^@c\(omment\)\? xMANoptions/@chapter Options/' \
    -e "s/^@c\(omment\)\? MAN/@MAN/"  |
   texi2roff -ma  |
-  sed -f strip-pp.sed |
+  sed -f $DIR/strip-pp.sed |
   sed -e '/^\.iX/d'
   exec 1>&4
 #  echo ".SH See Also"
@@ -65,7 +67,7 @@ extract()
 }
 
 
-for name in `fgrep -v '#' cmdname | cut -f1 -d\  ` ; do
+for name in `fgrep -v '#' $DIR/cmdname | cut -f1 -d\  ` ; do
   extract $name
 done
 
@@ -76,7 +78,7 @@ echo \'\\\" t
 echo .TH mtools 1 \"$date\" $package
 echo .SH Name
 echo "mtools - utilities to access DOS disks in Unix."
-cat mtools.texi |
+cat $DIR/mtools.texi |
   egrep -v '@end copying|@copying|@insertcopying' |
 	sed \
 	 -e "1,/^@c\(omment\)\? MANstart 1/d" \
@@ -87,7 +89,7 @@ cat mtools.texi |
 	 -e "s/@value{VERSION}/$VERSION/g" \
 	 -e "s%@value{SYSCONFDIR}%SYSCONFDIR%g" |
 	texi2roff -ma  |
-	sed -f strip-pp.sed |
+	sed -f $DIR/strip-pp.sed |
 	sed -e '/^\.iX/d'
 
 echo .SH See also
@@ -122,7 +124,7 @@ echo \'\\\" t
 echo .TH mtools 5 \"$date\" "MTOOLS" "MTOOLS"
 echo .SH Name
 echo "mtools.conf - mtools configuration files"
-cat mtools.texi |
+cat $DIR/mtools.texi |
   egrep -v '@end copying|@copying|@insertcopying' |
 	sed \
 		-e '1d' \
@@ -140,7 +142,7 @@ cat mtools.texi |
 		-e "/@ifnottex/d" \
 		-e "/@end ifnottex/d" |
 	texi2roff -ma  |
-	sed -f strip-pp.sed |
+	sed -f $DIR/strip-pp.sed |
 	sed -e '/^\.iX/d' -e 's/\.SS Description/.SH Description/'
 
 echo .SH See also
