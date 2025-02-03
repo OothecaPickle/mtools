@@ -50,9 +50,7 @@ sysconfdir  = @sysconfdir@
 datarootdir = @datarootdir@
 
 CC         = @CC@
-CXX        = @CXX@
 MYCFLAGS   = @CFLAGS@
-MYCXXFLAGS = @CXXFLAGS@
 CPPFLAGS   = @CPPFLAGS@
 HOST_ID    = @HOST_ID@
 DEFS       = @DEFS@ -DSYSCONFDIR=\"$(sysconfdir)\" $(HOST_ID)
@@ -136,7 +134,6 @@ X_LIBS = @X_LIBS@
 X_EXTRA_LIBS = @X_EXTRA_LIBS@
 X_PRE_LIBS = @X_PRE_LIBS@
 CFLAGS = $(CPPFLAGS) $(DEFS) $(MYCFLAGS) -I. @extraincludedir@ -I@srcdir@ $(USERCFLAGS)
-CXXFLAGS  = $(CPPFLAGS) $(DEFS) $(MYCXXFLAGS) -I. @extraincludedir@ -I@srcdir@ $(USERCFLAGS)
 LINK      = $(CC) $(LDFLAGS) $(USERLDFLAGS) @extralibdir@
 ALLLIBS   = $(USERLDLIBS) $(MACHDEPLIBS) $(SHLIB) $(X_EXTRA_LIBS) $(LIBS)
 X_LDFLAGS = $(X_EXTRA_LIBS) $(X_LIBS) @FLOPPYD_LIBS@ $(LIBS)
@@ -146,9 +143,6 @@ all:    mtools$(EXEEXT) $(LINKS) mkmanifest$(EXEEXT) @FLOPPYD@ mtools.1 mtools.5
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
-
-#%.o: %.cpp
-#	$(CXX) $(CXXFLAGS) -c $<
 
 mtools$(EXEEXT): $(OBJS_MTOOLS)
 	$(LINK) $(OBJS_MTOOLS) -o $@ $(ALLLIBS)
