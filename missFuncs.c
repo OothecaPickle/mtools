@@ -218,6 +218,30 @@ char *strpbrk(const char *string, const char *brkset)
 }
 #endif /* HAVE_STRPBRK */
 
+#ifdef HAVE_WCHAR_H
+#ifndef HAVE_WCSPBRK
+/*
+ * Return ptr to first occurrence of any character from `brkset'
+ * in the character string `string'; NULL if none exists.
+ */
+wchar_t *wcspbrk(const wchar_t *string, const wchar_t *brkset)
+{
+	register const wchar_t *p;
+
+	if (!string || !brkset)
+		return(0);
+	do {
+		for (p = brkset; *p != '\0' && *p != *string; ++p)
+			;
+		if (*p != '\0')
+			return((wchar_t *)string);
+	}
+	while (*string++);
+	return(0);
+}
+#endif /* HAVE_WCSPBRK */
+#endif
+
 
 #ifndef HAVE_STRTOUL
 static int getdigit(char a, int max)

@@ -328,13 +328,13 @@ static inline size_t mbrtowc(wchar_t *pwc, const char *s,
 
 #include <langinfo.h>
 
-static iconv_t to_native = NULL;
+static iconv_t to_native = 0;
 
 static void initialize_to_native(void)
 {
 	char *li, *cp;
 	size_t len;
-	if(to_native != NULL)
+	if(to_native != 0)
 		return;
 	li = nl_langinfo(CODESET);
 	len = strlen(li) + 11;

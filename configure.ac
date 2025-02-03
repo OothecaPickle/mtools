@@ -231,7 +231,7 @@ strdup strndup strcspn strspn strtoul strtol strtoll strtoui \
 memcpy strpbrk memset setenv seteuid setresuid \
 tcsetattr tcflush basename  \
 readdir snprintf setlocale strstr toupper_l strncasecmp_l \
-wcsdup wcscasecmp wcsnlen putwc \
+wcsdup wcscasecmp wcsnlen wcspbrk putwc \
 alarm sigaction usleep lstat unsetenv mkdir)
 
 
