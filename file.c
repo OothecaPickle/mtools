@@ -629,7 +629,7 @@ static uint32_t func1(void *Stream)
 {
 	DeclareThis(File_t);
 
-	return getAbsCluNr(This) ^ (uint32_t) (unsigned long) This->head.Next;
+	return getAbsCluNr(This) ^ (uint32_t) (uintmax_t) This->head.Next;
 }
 
 static uint32_t func2(void *Stream)
