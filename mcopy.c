@@ -583,6 +583,9 @@ static void usage(int mtype, int ret)
 	    fprintf(stderr,
 		    "       %s [-spatnmQVBT] [-D clash_option] sourcefile [sourcefiles...] targetdirectory\n",
 		    progname);
+	    fprintf(stderr,
+		    "       %s [-tnvm] MSDOSsourcefile\n",
+		    progname);
 	}
 	exit(ret);
 }
