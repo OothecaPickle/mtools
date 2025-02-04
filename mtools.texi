@@ -1634,7 +1634,9 @@ on its position on the command line.
 @item t
 Text file transfer.  Mcopy translates incoming carriage return/line
 feeds to line feeds when copying from MS-DOS to Unix, and vice-versa when
-copying from Unix to MS-DOS.
+copying from Unix to MS-DOS. Moreover copying stops at Control-Z
+characters when copying from MS-DOS to Unix, and Control-Z is added at
+end when copying from Unix to MS-DOS.
 @item b
 Batch mode. Optimized for huge recursive copies, but less secure if a
 crash happens during the copy.
@@ -1646,8 +1648,7 @@ Preserves the attributes of the copied files
 When mcopying multiple files, quits as soon as one copy fails (for
 example due to lacking storage space on the target disk)
 @item a
-Text (ASCII) file transfer.  @code{ASCII} translates incoming carriage
-return/line feeds to line feeds.
+Text (ASCII) file transfer. Same as t above.
 @item T
 Text (ASCII) file transfer with character set conversion.  Differs from
 @code{-a} in the @code{ASCII} also translates incoming PC-8 characters
@@ -2503,7 +2504,7 @@ command line options:
 @table @code
 @item t
 Text file viewing.  @code{Mtype} translates incoming carriage
-return/line feeds to line feeds.
+return/line feeds to line feeds. Typing stops at Control-Z character.
 @item s
 @code{Mtype} strips the high bit from the data.
 @end table
