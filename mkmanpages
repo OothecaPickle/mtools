@@ -18,7 +18,7 @@
 
 # mkmanpages invokes a custom version of texi2roff.
 # Sources of standard texi2roff can be found at http://ftp.funet.fi/pub/TeX/CTAN/support/texi2roff/texi2roff-2.0.tar.gz
-# Custome patch at https://alain.knaff.lu/texi2roff-2.0-ak.diff
+# Custom patch at https://alain.knaff.lu/texi2roff-2.0-ak.diff
 #
 # However, if you're just interested in compiling mtools (rather than
 # working on the documentation), I'd suggest you rely on the
