@@ -32,14 +32,11 @@ make info.
 ==================================================================
 Compiling using diet libc
 
-./configure CC="diet gcc -nostdinc" ac_cv_build=x86_64-pc-linux-dietlibc ac_cv_header_iconv_h=no ac_cv_header_wchar_h=no
+./configure CC="diet gcc -nostdinc" ac_cv_build=x86_64-pc-linux-dietlibc 
 make
 
 # Diet libc is not properly supported by autoconf's config.sub hence
 # the manual setting of ac_cv_build=
-
-# Diet libc does not properly support wide chars, that's why we
-# disable iconv.h and wchar.h using ac_cv_header
 
 # N.B. Dietlibc programs are always statically linked, and thus
 # actually *larger* than a program compiled against the system libc,
