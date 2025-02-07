@@ -32,6 +32,10 @@ Viktor Dukhovni (at Princeton, USA) had major input into v2.0.
 Since 2.0.7: maintained primarily and until now by Alain Knaff
 (Luxembourg) and David Niemi (Reston, Virginia, USA).
 
+The packaging process of mtools uses a modified version of Beverly
+A. Erlebacher's texi2roff tool to convert the texi documentation into
+man pages.
+
 Please report bugs to the mtools mailing list at info-mtools@gnu.org .
 
 You may subscribe to the mtools mailing list at
