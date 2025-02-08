@@ -20,7 +20,22 @@
 #ifndef SYSINCLUDES_H
 #define SYSINCLUDES_H
 
+#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6) || defined(__clang__)
+# define HAVE_PRAGMA_DIAGNOSTIC 1
+#endif
+
+#ifdef HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic push
+# ifdef __clang__
+#  pragma clang diagnostic ignored "-Wreserved-macro-identifier"
+# endif
+#endif
+
 #include "config.h"
+
+#ifdef HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic pop
+#endif
 
 
 /* OS/2 needs __inline__, but for some reason is not autodetected */
@@ -691,11 +706,6 @@ unsigned int sleep(unsigned int seconds);
 #ifndef O_LARGEFILE
 #define O_LARGEFILE 0
 #endif
-
-#if __GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6) || defined(__clang__)
-# define HAVE_PRAGMA_DIAGNOSTIC 1
-#endif
-
 
 #if SIZEOF_SIZE_T > SIZEOF_LONG
 # define SZF "%llu"
