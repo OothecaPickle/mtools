@@ -30,6 +30,11 @@ date. To generate a printable doc, make dvi. To generate an info file,
 make info.
 
 ==================================================================
+Compiling on BEBOX (BeOS DR9)
+
+See detailed instructions in README.BEBOX
+
+==================================================================
 Compiling using diet libc
 
 ./configure CC="diet gcc -nostdinc" ac_cv_build=x86_64-pc-linux-dietlibc 

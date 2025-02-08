@@ -1,8 +1,9 @@
 Compilation
 -----------
 
- To compile mtools on Unix, first type ./configure, then make.  To
-compile mtools on a Bebox, refer to README.BEBOX.
+ To compile mtools on most Unix platforms, first type ./configure,
+then make.  For other platforms, see INSTALL file in this same
+directory
 
 Doc
 ---
