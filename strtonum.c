@@ -107,22 +107,22 @@ uint32_t parseSize(char *sizeStr) {
 	case 'T':
 		checkOverflow(tot_sectors, 10);
 		tot_sectors *= 1024;
-		/* FALL THROUGH */
+		FALLTHROUGH
 	case 'G':
 		checkOverflow(tot_sectors, 10);
 		tot_sectors *= 1024;
-		/* FALL THROUGH */
+		FALLTHROUGH
 	case 'M':
 		checkOverflow(tot_sectors, 10);
 		tot_sectors *= 1024;
-		/* FALL THROUGH */
+		FALLTHROUGH
 	case 'K':
 		checkOverflow(tot_sectors, 1);
 		tot_sectors *= 2;
-		/* FALL THROUGH */
+		FALLTHROUGH
 	case 'S':
 		eptr++;
-		/* FALL THROUGH */
+		FALLTHROUGH
 	case '\0':
 		/* By default, assume sectors */
 		break;

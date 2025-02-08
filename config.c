@@ -705,15 +705,15 @@ static void parse_old_device_line(char drive)
     switch(items){
 	case 2:
 	    devices[cur_dev].fat_bits = 0;
-	    /* fall thru */
+	    FALLTHROUGH
 	case 3:
 	    devices[cur_dev].sectors = 0;
 	    devices[cur_dev].heads = 0;
 	    devices[cur_dev].tracks = 0;
-	    /* fall thru */
+	    FALLTHROUGH
 	case 6:
 	    devices[cur_dev].offset = 0;
-	    /* fall thru */
+	    FALLTHROUGH
 	default:
 	    break;
 	case 0:

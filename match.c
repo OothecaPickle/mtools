@@ -130,7 +130,7 @@ static int mt_match(const wchar_t *s, const wchar_t *p, wchar_t *out, int Case,
 			case '\\':	/* Literal match with next character */
 				p++;
 				length--;
-				/* fall thru */
+				FALLTHROUGH
 			default:
 				if (!compfn(*s,*p))
 					return(0);

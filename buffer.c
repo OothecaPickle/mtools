@@ -253,7 +253,7 @@ static ssize_t buf_pwrite(Stream_t *Stream, char *buf,
 				offset = OFFSET;
 				break;
 			}
-			/* FALL THROUGH */
+			FALLTHROUGH
 		case APPEND:
 #ifdef DEBUG
 			fprintf(stderr, "append\n");

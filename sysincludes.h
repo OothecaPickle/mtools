@@ -109,6 +109,13 @@ ac_cv_func_setpgrp_void=yes ../mtools/configure --build=i386-linux-gnu --host=i3
 # if __GNUC__ >= 8
 #  define NONULLTERM __attribute__ ((nonstring))
 # endif
+# if __GNUC__ >= 7
+#  define FALLTHROUGH __attribute__ ((fallthrough));
+# endif
+#endif
+
+#if defined(__clang__) && __clang_major__ >= 12
+#  define FALLTHROUGH __attribute__ ((fallthrough));
 #endif
 
 #ifndef UNUSED
@@ -127,6 +134,11 @@ ac_cv_func_setpgrp_void=yes ../mtools/configure --build=i386-linux-gnu --host=i3
 #ifndef NONULLTERM
 # define NONULLTERM /* */
 #endif
+
+#ifndef FALLTHROUGH
+# define FALLTHROUGH /* FALL THROUGH */
+#endif
+
 
 /***********************************************************************/
 /*                                                                     */

@@ -627,7 +627,7 @@ void mcopy(int argc, char **argv, int mtype)
 				break;
 			case 'T':
 				arg.convertCharset = 1;
-				 /*-fallthrough*/
+				FALLTHROUGH
 			case 'a':
 			case 't':
 				arg.textmode = 1;

@@ -184,7 +184,7 @@ void mattrib(int argc, char **argv, int type UNUSEDP)
 		switch (c) {
 			case 'h':
 				wantUsage = 1;
-				/* FALL THROUGH */
+				FALLTHROUGH
 			default:
 				arg.remove &= ~letterToCode(c);
 				break;
