@@ -25,12 +25,12 @@ typedef struct Buffer_t {
 	struct Stream_t head;
 
 	size_t size;     	/* size of read/write buffer */
-	int dirty;	       	/* is the buffer dirty? */
 
 	size_t sectorSize;	/* sector size: all operations happen
 				 * in multiples of this */
 	size_t cylinderSize;	/* cylinder size: preferred alignment,
 				 * but for efficiency, less data may be read */
+	int dirty;	       	/* is the buffer dirty? */
 	int ever_dirty;	       	/* was the buffer ever dirty? */
 	size_t dirty_pos;
 	size_t dirty_end;
