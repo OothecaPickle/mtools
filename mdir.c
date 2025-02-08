@@ -537,8 +537,8 @@ void mdir(int argc, char **argv, int type UNUSEDP)
 	int ret;
 	MainParam_t mp;
 	int c;
-	const char *fakedArgv[] = { "." };
-
+	char *fakedArgv[] = { "." };
+	
 	concise = 0;
 	recursive = 0;
 	wide = all = 0;
@@ -585,7 +585,7 @@ void mdir(int argc, char **argv, int type UNUSEDP)
 
 	/* fake an argument */
 	if (optind == argc) {
-		argv = (char **)fakedArgv;
+		argv = fakedArgv;
 		argc = 1;
 		optind = 0;
 	}

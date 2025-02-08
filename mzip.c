@@ -195,7 +195,7 @@ static uint8_t get_zip_status(int priv, int fd, void *extra_data)
 
 
 static int short_command(int priv, int fd, uint8_t cmd1, uint8_t cmd2,
-			 uint8_t cmd3, const char *data, void *extra_data)
+			 uint8_t cmd3, char *data, void *extra_data)
 {
 	uint8_t cdb[6] = { 0, 0, 0, 0, 0, 0 };
 
@@ -204,12 +204,12 @@ static int short_command(int priv, int fd, uint8_t cmd1, uint8_t cmd2,
 	cdb[4] = cmd3;
 
 	return zip_cmd(priv, fd, cdb, 6, SCSI_IO_WRITE,
-		       (char *) data, data ? (uint32_t) strlen(data) : 0,
+		       data, data ? (uint32_t) strlen(data) : 0,
 		       extra_data);
 }
 
 
-static int iomega_command(int priv, int fd, uint8_t mode, const char *data,
+static int iomega_command(int priv, int fd, uint8_t mode, char *data,
 			  void *extra_data)
 {
 	return short_command(priv, fd,
@@ -424,7 +424,7 @@ void mzip(int argc, char **argv, int type UNUSEDP)
 	if (request & ZIP_MODE_CHANGE) {
 		int ret;
 		uint8_t unlockMode, unlockMask;
-		const char *passwd;
+		char *passwd;
 		char dummy[1];
 
 		if(newMode == ZIP_UNLOCK_TIL_EJECT) {

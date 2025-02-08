@@ -22,7 +22,7 @@
 #include "mtools.h"
 
 #ifndef OS_mingw32msvc
-ssize_t safePopenOut(const char *const* command, char *output, size_t len)
+ssize_t safePopenOut(char *const* command, char *output, size_t len)
 {
 	int pipefd[2];
 	pid_t pid;
@@ -67,7 +67,7 @@ const char *expand(const char *input, char *ans)
 #ifndef OS_mingw32msvc
 	ssize_t last;
 	char buf[256];
-	const char *command[] = { "/bin/sh", "sh", "-c", 0, 0 };
+	char *command[] = { "/bin/sh", "sh", "-c", 0, 0 };
 
 	ans[EXPAND_BUF-1]='\0';
 

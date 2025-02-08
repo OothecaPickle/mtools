@@ -50,9 +50,28 @@ static const char *asciiTries[] = {
 
 static const wchar_t *testString = L"ab";
 
+/* Use SUSv2 prototype for iconv, makes more sense than POSIX-1.2007
+ * https://stackoverflow.com/questions/45938990/why-does-the-iconv-function-need-a-non-const-inbuffer
+ */
+static inline size_t mt_iconv(iconv_t cd, const char **inbuf,
+			      size_t *inbytesleft,
+			      char **outbuf, size_t *outbytesleft) {
+#ifdef HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic push
+# ifdef __clang__
+#  pragma clang diagnostic ignored "-Wcast-qual"
+# endif
+#endif
+    return iconv(cd, (ICONV_CONST char **) inbuf, inbytesleft,
+		 outbuf, outbytesleft);
+#ifdef HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic pop
+#endif
+}
+
 static int try(const char *testCp) {
 	size_t res;
-	char *inbuf = (char *)testString;
+	const char *inbuf = (const char *) testString;
 	size_t inbufLen = 2*sizeof(wchar_t);
 	char outbuf[3];
 	char *outbufP = outbuf;
@@ -67,9 +86,9 @@ static int try(const char *testCp) {
 	}
 	if(test == (iconv_t) -1)
 		goto fail0;
-	res = iconv(test,
-		    &inbuf, &inbufLen,
-		    &outbufP, &outbufLen);
+	res = mt_iconv(test,
+		       &inbuf, &inbufLen,
+		       &outbufP, &outbufLen);
 	iconv_close(test);
 	if(res != 0 || outbufLen != 0 || inbufLen != 0)
 		goto fail;
@@ -156,9 +175,7 @@ size_t dos_to_wchar(doscp_t *cp, const char *dos, wchar_t *wchar, size_t len)
 	size_t in_len=len;
 	size_t out_len=len*sizeof(wchar_t);
 	wchar_t *dptr=wchar;
-	char *dos2 = (char *) dos; /* Magic to be able to call iconv with its
-				      buggy prototype */
-	r=iconv(cp->from, &dos2, &in_len, (char **)&dptr, &out_len);
+	r=mt_iconv(cp->from, &dos,	&in_len, (char **)&dptr, &out_len);
 	if(r == (size_t) -1)
 		return r;
 	*dptr = L'\0';
@@ -171,7 +188,7 @@ size_t dos_to_wchar(doscp_t *cp, const char *dos, wchar_t *wchar, size_t len)
  * mangled will be set if there has been an untranslatable character.
  */
 static size_t safe_iconv(iconv_t conv, const wchar_t *wchar, char *dest,
-		      size_t in_len, size_t out_len, int *mangled)
+			 size_t in_len, size_t out_len, int *mangled)
 {
 	size_t r;
 	unsigned int i;
@@ -181,7 +198,8 @@ static size_t safe_iconv(iconv_t conv, const wchar_t *wchar, char *dest,
 	in_len=in_len*sizeof(wchar_t);
 
 	while(in_len > 0 && out_len > 0) {
-		r=iconv(conv, (char**)&wchar, &in_len, &dptr, &out_len);
+		r=mt_iconv(conv, (const char**)&wchar,
+			   &in_len, &dptr, &out_len);
 		if(r == (size_t) -1 || errno != EILSEQ) {
 			/* everything transformed, or error that is _not_ a bad
 			 * character */
