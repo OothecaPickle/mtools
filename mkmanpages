@@ -37,13 +37,11 @@ unset LANG
 date=`date +%d%b%y`
 package="mtools-"`grep mversion $DIR/patchlevel.c | sed 's/^.*"\(.*\)";/\1/'`
 
-infile=/tmp/infile.$$
-
 extract()
 {
   command=$1
   echo extracting $command
-  outfile=`echo $command | tr '[A-Z]' '[a-z]'`.1
+  outfile=$command.1
   exec 4>&1
   exec >$outfile
 
@@ -57,7 +55,7 @@ extract()
   cat $DIR/man-warning.texi $DIR/mtools.texi $DIR/man-warning-end.texi |
   egrep -v '@end copying|@copying|@insertcopying' |
   sed \
-   -e "/^@c\(omment\)\? skipskipskip/,/^@node $command/d" \
+   -e "/^@comment skipskipskip/,/^@node $command/d" \
    -e "/^@node [^,]*, [^,]*, $command, Commands$/,/^@bye/d" \
    -e "/^@node [^,]*, [^,]*, Commands/,/^@bye/d" \
    -e 's/^@section/@chapter/' \
@@ -65,8 +63,8 @@ extract()
    -e 's/^@chapter.*$/@chapter Description/' \
    -e 's/^@section/@chapter/' \
    -e 's/^@subs/@s/' \
-   -e 's/^@c\(omment\)\? xMANoptions/@chapter Options/' \
-   -e "s/^@c\(omment\)\? MAN/@MAN/"  |
+   -e 's/^@comment xMANoptions/@chapter Options/' \
+   -e "s/^@comment MAN/@MAN/"  |
   texi2roff -ma  |
   sed -f $DIR/strip-pp.sed |
   sed -e '/^\.iX/d'
@@ -90,11 +88,11 @@ echo "mtools - utilities to access DOS disks in Unix."
 cat $DIR/mtools.texi |
   egrep -v '@end copying|@copying|@insertcopying' |
 	sed \
-	 -e "1,/^@c\(omment\)\? MANstart 1/d" \
-	 -e '/^@c\(omment\)\? MANskip 1/,/^@c\(omment\)\? MANend-skip 1/d' \
-	 -e '/^@c\(omment\)\? MANend-skip 5/d' \
-	 -e '/^@c\(omment\)\? MANend 5/d' \
-	 -e "s/^@c\(omment\)\? MAN/@MAN/" \
+	 -e "1,/^@comment MANstart 1/d" \
+	 -e '/^@comment MANskip 1/,/^@comment MANend-skip 1/d' \
+	 -e '/^@comment MANend-skip 5/d' \
+	 -e '/^@comment MANend 5/d' \
+	 -e "s/^@comment MAN/@MAN/" \
 	 -e "s/@value{VERSION}/$VERSION/g" \
 	 -e "s%@value{SYSCONFDIR}%SYSCONFDIR%g" |
 	texi2roff -ma  |
@@ -137,10 +135,10 @@ cat $DIR/mtools.texi |
   egrep -v '@end copying|@copying|@insertcopying' |
 	sed \
 		-e '1d' \
-		-e '/^@c\(omment\)\? MANskip 5/,/^@c\(omment\)\? MANend-skip 5/d' \
-	        -e '/^@c\(omment\)\? MANend-skip 1/d' \
-	        -e '/^@c\(omment\)\? MANskip 1/d' \
-		-e "s/^@c\(omment\)\? MAN/@MAN/"  \
+		-e '/^@comment MANskip 5/,/^@comment MANend-skip 5/d' \
+	        -e '/^@comment MANend-skip 1/d' \
+	        -e '/^@comment MANskip 1/d' \
+		-e "s/^@comment MAN/@MAN/"  \
 		-e "/@include/ d" \
 		-e "s/@value{VERSION}/$VERSION/g" \
 		-e "s/@value{UPDATED}/$UPDATED/g" \
