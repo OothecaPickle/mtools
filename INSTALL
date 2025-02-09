@@ -101,5 +101,10 @@ Clang, all warnings except rare warnings that are "over the top"
 ./configure CC=clang CFLAGS="-Weverything -Wno-padded -Wno-disabled-macro-expansion" --prefix=""
 make
 
-# For over-the-top warnings such as disabled-macro-expansion, see
-#  https://stackoverflow.com/questions/34704422/warning-disabled-expansion-of-recursive-macro
+# For over-the-top warnings, see:
+#  disabled-macro-expansion:
+#   https://stackoverflow.com/questions/34704422/warning-disabled-expansion-of-recursive-macro
+#  padded:
+#   https://stackoverflow.com/questions/40662265/warning-for-struct-padding-in-clang
+#   padding warning is also shown when padding happens at end of
+#   structure, i.e. not easily avoidable by just re-ordering the variables
