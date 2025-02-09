@@ -195,7 +195,7 @@ static uint8_t get_zip_status(int priv, int fd, void *extra_data)
 
 
 static int short_command(int priv, int fd, uint8_t cmd1, uint8_t cmd2,
-			 uint8_t cmd3, char *data, void *extra_data)
+			 uint8_t cmd3, const char *data, void *extra_data)
 {
 	uint8_t cdb[6] = { 0, 0, 0, 0, 0, 0 };
 
@@ -203,13 +203,28 @@ static int short_command(int priv, int fd, uint8_t cmd1, uint8_t cmd2,
 	cdb[1] = cmd2;
 	cdb[4] = cmd3;
 
+#if defined HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic push
+# ifdef __clang__
+#  pragma clang diagnostic ignored "-Wincompatible-pointer-types-discards-qualifiers"
+# else
+#  pragma GCC diagnostic ignored "-Wdiscarded-qualifiers"
+# endif
+#endif
+	/* zip_cmd can either write or read the data, depending
+	   depending on cmd2. Due to this, zip_cmd cannot declare its data
+	   attribute const, but with SCSI_IO_WRITE we know that it is
+	   indeed const in this particular case */
 	return zip_cmd(priv, fd, cdb, 6, SCSI_IO_WRITE,
 		       data, data ? (uint32_t) strlen(data) : 0,
 		       extra_data);
+#if defined HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic pop
+#endif
 }
 
 
-static int iomega_command(int priv, int fd, uint8_t mode, char *data,
+static int iomega_command(int priv, int fd, uint8_t mode, const char *data,
 			  void *extra_data)
 {
 	return short_command(priv, fd,
@@ -424,7 +439,7 @@ void mzip(int argc, char **argv, int type UNUSEDP)
 	if (request & ZIP_MODE_CHANGE) {
 		int ret;
 		uint8_t unlockMode, unlockMask;
-		char *passwd;
+		const char *passwd;
 		char dummy[1];
 
 		if(newMode == ZIP_UNLOCK_TIL_EJECT) {
