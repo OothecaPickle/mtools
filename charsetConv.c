@@ -49,7 +49,7 @@ static const char* wcharTries[] = {
 };
 
 static const char *asciiTries[] = {
-	"ASCII", "ASCII-GR", "ISO8859-1"
+	"ASCII", "US-ASCII", "ASCII-GR", "ISO8859-1"
 };
 
 static const wchar_t *testString = L"ab";
