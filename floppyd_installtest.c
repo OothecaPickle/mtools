@@ -68,7 +68,7 @@ static uint32_t authenticate_to_floppyd(char fullauth, int sock, char *display,
 {
 	uint32_t filelen=0;
 	Byte buf[16];
-	char *command[] = { "xauth", "xauth", "extract", "-", 0, 0 };
+	const char *command[] = { "xauth", "xauth", "extract", "-", 0, 0 };
 	char *xcookie = NULL;
 	Dword errcode;
 	uint32_t bytesRead;

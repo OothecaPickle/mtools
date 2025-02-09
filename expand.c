@@ -22,7 +22,7 @@
 #include "mtools.h"
 
 #ifndef OS_mingw32msvc
-ssize_t safePopenOut(char *const* command, char *output, size_t len)
+ssize_t safePopenOut(const char *const* command, char *output, size_t len)
 {
 	int pipefd[2];
 	pid_t pid;
@@ -45,7 +45,23 @@ ssize_t safePopenOut(char *const* command, char *output, size_t len)
 				exit(1);
 			}
 			close(pipefd[1]);
+#if defined HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-Wcast-qual"
+#endif
+			/* execvp actually neither modifies the
+			 * command vector, nor its individual
+			 * strings. However, due to technical reasons,
+			 * it can't delcare the individual strings to
+			 * be const, as doing so would raise cumbersome
+			 * "discards qualifiers in nested pointer
+			 * types" warnings with current compilers in
+			 * other use cases
+			 */ 
 			execvp(command[0], (char *const*)(command+1));
+#if defined HAVE_PRAGMA_DIAGNOSTIC
+# pragma GCC diagnostic pop
+#endif
 			exit(1);
 		default:
 			close(pipefd[1]);
@@ -67,7 +83,7 @@ const char *expand(const char *input, char *ans)
 #ifndef OS_mingw32msvc
 	ssize_t last;
 	char buf[256];
-	char *command[] = { "/bin/sh", "sh", "-c", 0, 0 };
+	const char *command[] = { "/bin/sh", "sh", "-c", 0, 0 };
 
 	ans[EXPAND_BUF-1]='\0';
 

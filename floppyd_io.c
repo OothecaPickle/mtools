@@ -70,7 +70,7 @@ static unsigned int authenticate_to_floppyd(RemoteFile_t *floppyd,
 	uint16_t filelen;
 	ssize_t newlen;
 	Byte buf[16];
-	char *command[] = { "xauth", "xauth", "extract", "-", 0, 0 };
+	const char *command[] = { "xauth", "xauth", "extract", "-", 0, 0 };
 	char *xcookie;
 	Dword errcode;
 	int l;

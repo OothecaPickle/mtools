@@ -114,6 +114,6 @@ make
 #   structure, i.e. not easily avoidable by just re-ordering the variables
 
 ==================================================================
-Gcc, "all" warnings except -Wwrite-strings
+Gcc, "all" warnings
 
-./configure CC=gcc CFLAGS="-pedantic -Wall -Wextra -Wcast-qual -Wunused-macros -Wshadow -Wundef -Wstrict-prototypes -Wunused -Wmissing-prototypes -Wmissing-declarations -Wdeclaration-after-statement -Wunused-but-set-variable"
+./configure CC=gcc CFLAGS="-pedantic -Wall -Wextra -Wcast-qual -Wunused-macros -Wshadow -Wwrite-strings -Wundef -Wstrict-prototypes -Wunused -Wmissing-prototypes -Wmissing-declarations -Wdeclaration-after-statement -Wunused-but-set-variable"
