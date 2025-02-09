@@ -34,6 +34,10 @@ struct doscp_t {
 
 static const char *wcharCp=NULL;
 
+/* FIXME: encodings after WCHAR_T should not all be tried in sequence,
+ * but rather according to platform's sizeof(wchar_t) and endianness
+ * https://stackoverflow.com/questions/62032729/using-iconv-with-wchar-t-on-linux
+ */
 static const char* wcharTries[] = {
 	"WCHAR_T",
 	"UTF-32BE", "UTF-32LE",
