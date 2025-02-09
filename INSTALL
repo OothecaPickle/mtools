@@ -108,3 +108,8 @@ make
 #   https://stackoverflow.com/questions/40662265/warning-for-struct-padding-in-clang
 #   padding warning is also shown when padding happens at end of
 #   structure, i.e. not easily avoidable by just re-ordering the variables
+
+==================================================================
+Gcc, "all" warnings except -Wwrite-strings
+
+./configure CC=gcc CFLAGS="-pedantic -Wall -Wextra -Wcast-qual -Wunused-macros -Wshadow -Wundef -Wstrict-prototypes -Wunused -Wmissing-prototypes -Wmissing-declarations -Wdeclaration-after-statement -Wunused-but-set-variable"
