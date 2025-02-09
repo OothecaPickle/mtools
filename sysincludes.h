@@ -24,17 +24,15 @@
 # define HAVE_PRAGMA_DIAGNOSTIC 1
 #endif
 
-#ifdef HAVE_PRAGMA_DIAGNOSTIC
-# pragma GCC diagnostic push
-# ifdef __clang__
-#  pragma clang diagnostic ignored "-Wreserved-macro-identifier"
-# endif
+#if defined HAVE_PRAGMA_DIAGNOSTIC && defined __clang__
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wreserved-macro-identifier"
 #endif
 
 #include "config.h"
 
-#ifdef HAVE_PRAGMA_DIAGNOSTIC
-# pragma GCC diagnostic pop
+#if defined HAVE_PRAGMA_DIAGNOSTIC && defined __clang__
+# pragma clang diagnostic pop
 #endif
 
 
