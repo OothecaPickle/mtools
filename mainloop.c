@@ -90,7 +90,7 @@ static int mt_unix_loop(Stream_t *Dir, MainParam_t *mp,
 }
 
 int unix_loop(Stream_t *Stream UNUSEDP, MainParam_t *mp,
-	      char *arg, int follow_dir_link)
+	      const char *arg, int follow_dir_link)
 {
 	int ret;
 	int isdir=0;
@@ -527,21 +527,22 @@ int main_loop(MainParam_t *mp, char **argv, int argc)
 		return 1;
 	}
 
-	for (i = 0; i < argc; i++) {
+	for (i = 0; i == 0 || i < argc; i++) {
+		const char *arg = i < argc ? argv[i] : "";
 		if ( got_signal )
 			break;
-		mp->originalArg = argv[i];
-		mp->basenameHasWildcard = strpbrk(mt_basename(mp->originalArg),
-						  "*[?") != 0;
+		mp->originalArg = arg;
+		mp->basenameHasWildcard =
+			strpbrk(mt_basename(mp->originalArg), "*[?") != 0;
 		if (mp->unixcallback && (!argv[i][0]
 #ifdef OS_mingw32msvc
 /* On Windows, support only the command-line image drive. */
                                          || argv[i][0] != ':'
 #endif
                                          || argv[i][1] != ':' ))
-			ret = unix_loop(0, mp, argv[i], 1);
+			ret = unix_loop(0, mp, arg, 1);
 		else
-			ret = dos_loop(mp, argv[i]);
+			ret = dos_loop(mp, arg);
 
 		if (! (ret & (GOT_ONE | ERROR_ONE)) ) {
 			/* one argument was unmatched */

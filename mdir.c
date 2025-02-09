@@ -537,7 +537,6 @@ void mdir(int argc, char **argv, int type UNUSEDP)
 	int ret;
 	MainParam_t mp;
 	int c;
-	char *fakedArgv[] = { "." };
 	
 	concise = 0;
 	recursive = 0;
@@ -581,13 +580,6 @@ void mdir(int argc, char **argv, int type UNUSEDP)
 			default:
 				usage(1);
 		}
-	}
-
-	/* fake an argument */
-	if (optind == argc) {
-		argv = fakedArgv;
-		argc = 1;
-		optind = 0;
 	}
 
 	init_mp(&mp);
