@@ -527,7 +527,7 @@ int main_loop(MainParam_t *mp, char **argv, int argc)
 		return 1;
 	}
 
-	for (i = 0; i == 0 || i < argc; i++) {
+	for (i = 0; i < argc || i == 0; i++) {
 		const char *arg = i < argc ? argv[i] : "";
 		if ( got_signal )
 			break;
