@@ -110,6 +110,7 @@ AC_CHECK_LIB(iconv, iconv)
 dnl Checks for header files.
 AC_HEADER_SYS_WAIT
 AC_HEADER_STDBOOL
+AC_HEADER_MAJOR
 AC_CHECK_HEADERS(getopt.h stdarg.h \
 libc.h fcntl.h limits.h sys/file.h sys/ioctl.h time.h sys/time.h \
 sys/param.h memory.h malloc.h io.h signal.h sys/signal.h utime.h sgtty.h \
