@@ -243,8 +243,6 @@ AC_CHECK_DECLS([sys_errlist, errno],,,[AC_INCLUDES_DEFAULT
 #include <errno.h>])
 AC_CHECK_DECLS([optarg])
 
-AM_ICONV
-
 [
 echo "Host OS=$host_os"
 host_os0=`echo $host_os | sed 's/-/_/g'`

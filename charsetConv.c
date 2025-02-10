@@ -62,10 +62,9 @@ static inline size_t mt_iconv(iconv_t cd, const char **inbuf,
 			      char **outbuf, size_t *outbytesleft) {
 #ifdef HAVE_PRAGMA_DIAGNOSTIC
 # pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-Wcast-qual"
+# pragma GCC diagnostic ignored "-Wincompatible-pointer-types"
 #endif
-    return iconv(cd, (ICONV_CONST char **) inbuf, inbytesleft,
-		 outbuf, outbytesleft);
+    return iconv(cd, inbuf, inbytesleft, outbuf, outbytesleft);
 #ifdef HAVE_PRAGMA_DIAGNOSTIC
 # pragma GCC diagnostic pop
 #endif
