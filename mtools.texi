@@ -589,6 +589,8 @@ bypass the fat checking.
 Original code (versions through 2.0.7?) of mtools was developped by
 Emmet P. Gray (Texas, USA).
 
+David C. Niemi contributed VFAT support and helped maintain mtools.
+
 The packaging process of mtools uses a modified version of Beverly
 A. Erlebacher's texi2roff tool to convert the texi documentation into
 man pages.
