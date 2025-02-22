@@ -29,7 +29,9 @@
  * Rewritten in C by Alain Knaff.  Apparently C++ is still not as
  * portable as C.  */
 
-#define DEBUG 0
+#ifndef DEBUG
+# define DEBUG 0
+#endif
 
 #include "sysincludes.h"
 #include "llong.h"
@@ -314,12 +316,12 @@ static char send_packet(Packet packet, io_buffer fp)
 		buf_write(fp, packet->data, packet->len);
 		flush(fp);
 #if DEBUG
-		fprintf(stderr, "send_packet(): Size: %li\n", packet->len);
+		fprintf(stderr, "send_packet(): Size: %u\n", packet->len);
 #endif
 
 #if DEBUG
 		fprintf(stderr, "send_packet(): ");
-		for (int i = 0; i < packet->len; i++) {
+		for (unsigned int i = 0; i < packet->len; i++) {
 			fprintf(stderr, "%d ", packet->data[i]);
 		}
 		fprintf(stderr, "\n");
@@ -335,7 +337,7 @@ static char recv_packet(Packet packet, io_buffer fp, Dword maxlength)
 	size_t l;
 	Dword length = read_dword(fp);
 #if DEBUG
-	fprintf(stderr, "recv_packet(): Size: %li\n", length);
+	fprintf(stderr, "recv_packet(): Size: %u\n", length);
 #endif
 	if (length > maxlength || length == 0xffffffff ) {
 		return 0;
@@ -352,12 +354,12 @@ static char recv_packet(Packet packet, io_buffer fp, Dword maxlength)
 		return 0;
 	}
 #if DEBUG
-	fprintf(stderr, "*** read: %li\n", packet->len);
+	fprintf(stderr, "*** read: %u\n", packet->len);
 #endif
 
 #if DEBUG
 	{
-		int i;
+		unsigned int i;
 		fprintf(stderr, "recv_packet(): ");
 		for (i = 0; i < packet->len; i++) {
 			fprintf(stderr, "%d ", packet->data[i]);
@@ -614,7 +616,7 @@ static in_addr_t getipaddress(char *ipaddr)
 		}
 
 #if DEBUG
-	fprintf(stderr, "IP lookup %s -> 0x%08lx\n", ipaddr, ip);
+	fprintf(stderr, "IP lookup %s -> 0x%08x\n", ipaddr, ip);
 #endif
 
 	return (ip);
@@ -805,12 +807,12 @@ static void server_main_loop(int sock, const char *const*device_name,
 				exit(0);
 #if DEBUG == 0
 		}
-#endif
 		/*
 		 * Close the socket as the child does the handling.
 		 */
 		close(new_sock);
 		new_sock = -1;
+#endif
 	}
 }
 
@@ -1077,7 +1079,11 @@ static void cleanup(int x UNUSEDP) {
 #include "lockdev.h"
 
 void serve_client(int sockhandle, const char *const*device_name,
-		  unsigned int n_dev, int close_stderr) {
+		  unsigned int n_dev, int close_stderr
+#if DEBUG
+		  UNUSEDP
+#endif
+		  ) {
 	Packet opcode;
 	Packet parm;
 

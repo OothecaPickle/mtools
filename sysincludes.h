@@ -717,6 +717,9 @@ unsigned int sleep(unsigned int seconds);
 #define O_LARGEFILE 0
 #endif
 
+/* printf formatting strings for size_t type. We could use %z here,
+   but it is hard to autodetect whether this will work. Compiler may
+   well be C99, but not the libc (such as unixpc with gcc -std=gnu99) */
 #if SIZEOF_SIZE_T > SIZEOF_LONG
 # define SZF "%llu"
 # define SSZF "%lld"
@@ -727,6 +730,14 @@ unsigned int sleep(unsigned int seconds);
 # else
 #  define SZF "%u"
 #  define SSZF "%d"
+# endif
+#endif
+
+#ifndef PRIu32
+# if SIZEOF_INT >= 32
+#  define PRIu32 "%u"
+# else
+#  define PRIu32 "%lu"
 # endif
 #endif
 
