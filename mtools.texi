@@ -263,7 +263,9 @@ The @code{mcd} command (@ref{mcd}) is used to establish the device and
 the current working directory (relative to the MS-DOS file system),
 otherwise the default is assumed to be @code{A:/}. However, unlike
 MS-DOS, there is only one working directory for all drives, and not one
-per drive.
+per drive. Moreover, if you set drive @code{::/}, mtools does not
+remember the associated image file, but only the fact that you are
+working on an image file at all.
 
 @node long names, name clashes, directory, Common features
 @section VFAT-style long file names
