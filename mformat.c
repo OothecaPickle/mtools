@@ -1266,6 +1266,12 @@ void mformat(int argc, char **argv, int dummy UNUSEDP)
 
 	/* create the image file if needed */
 	if (create) {
+		/* Write at end of image file to create it. It is safe
+		 * to re-use boot and zero out sector's memory buffer
+		 * for this, as in the case of create=1, there is no
+		 * old boot sector, and it will not have been read by
+		 * the PREADS in the devices loop above */
+		memset(boot.characters, '\0', Fs->sector_size);
 		PWRITES(Fs->head.Next, &boot.characters,
 			sectorsToBytes(Fs, tot_sectors-1),
 			Fs->sector_size);
