@@ -595,10 +595,17 @@ static result_t checkNameForMatch(struct direntry_t *direntry,
 		case DCET_USED:
 			break;
 #ifdef DEBUG
+# if defined HAVE_PRAGMA_DIAGNOSTIC && defined __clang__
+#  pragma clang diagnostic push
+#  pragma clang diagnostic ignored "-Wcovered-switch-default"
+# endif
 		default:
 			fprintf(stderr, "Unexpected entry type %d\n",
 				dce->type);
 			return RES_ERROR;
+# if defined HAVE_PRAGMA_DIAGNOSTIC && defined __clang__
+#  pragma clang diagnostic pop
+# endif
 #endif
 	}
 

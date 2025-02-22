@@ -72,11 +72,11 @@ static int mt_buf_flush(Buffer_t *Buffer)
 	if (!Buffer->dirty)
 		return 0;
 #ifdef DEBUG
-	fprintf(stderr, "write %08x -- %02x %08x %08x\n",
-		Buffer,
+	fprintf(stderr, "write %p -- %02x %08lx %08lx\n",
+		(void *)Buffer,
 		(unsigned char) Buffer->buf[0],
-		Buffer->current + Buffer->dirty_pos,
-		Buffer->dirty_end - Buffer->dirty_pos);
+		(unsigned long) Buffer->current + Buffer->dirty_pos,
+		(unsigned long) Buffer->dirty_end - Buffer->dirty_pos);
 #endif
 
 	ret = force_pwrite(Buffer->head.Next,
@@ -208,13 +208,19 @@ static ssize_t buf_pwrite(Stream_t *Stream, char *buf,
 	This->ever_dirty = 1;
 
 #ifdef DEBUG
-	fprintf(stderr, "buf write %x   %02x %08x %08x -- %08x %08x -- %08x\n",
-		Stream, (unsigned char) This->buf[0],
-		start, len, This->current, This->cur_size, This->size);
-	fprintf(stderr, "%d %d %d %x %x\n",
-		start == This->current + This->cur_size,
+	fprintf(stderr, "buf write %p   %02x %08lx %08lx -- %08lx %08lx -- %08lx\n",
+		(void*)Stream, (unsigned char) This->buf[0],
+		(unsigned long) start,
+		(unsigned long) len,
+		(unsigned long) This->current,
+		(unsigned long) This->cur_size,
+		(unsigned long) This->size);
+	fprintf(stderr, "%d %d %d %lx %lx\n",
+		(unsigned long) start == (unsigned long) This->current + This->cur_size,
 		This->cur_size < This->size,
-		len >= This->sectorSize, len, This->sectorSize);
+		len >= This->sectorSize,
+		(unsigned long) len,
+		(unsigned long) This->sectorSize);
 #endif
 	switch(isInBuffer(This, start, &len)) {
 		case OUTSIDE:
@@ -276,9 +282,16 @@ static ssize_t buf_pwrite(Stream_t *Stream, char *buf,
 		case ERROR:
 			return -1;
 #ifdef DEBUG
+# if defined HAVE_PRAGMA_DIAGNOSTIC && defined __clang__
+#  pragma clang diagnostic push
+#  pragma clang diagnostic ignored "-Wcovered-switch-default"
+# endif
 		default:
 			fprintf(stderr, "Should not happen\n");
 			exit(1);
+# if defined HAVE_PRAGMA_DIAGNOSTIC && defined __clang__
+#  pragma clang diagnostic pop
+# endif
 #endif
 	}
 

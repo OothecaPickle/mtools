@@ -1,7 +1,7 @@
 %define _binary_payload w9.gzdio
 Name:           mtools
 Summary:        mtools, read/write/list/format DOS disks under Unix
-Version:        4.0.47
+Version:        4.0.48
 Release:        1
 License:        GPLv3+
 Group:          Utilities/System
@@ -135,6 +135,19 @@ if [ -f %{_bindir}/install-info ] ; then
 fi
 
 %changelog
+* Sat Feb 22 2025 Alain Knaff <alain@knaff.lu>
+- portability fixes, mostly for Watcom compiler
+- cleaned up some other warnings
+- various runtime fixes for windows (/dev/tty vs CONIN$)
+- use correct mtools (sub)command name in usage() when using -c
+- other usage() spelling/wording fixes
+- fix mtype'ing multiple files at once
+- integrate mkmanpages into make system, clean it, and credit
+  texi2roff's original developer and others
+- document compilation on less usual environments in INSTALL
+- uninitialized buffer fix in mformat
+- fix parameter counting error in mcd, and document that image
+  file name is not remembered
 * Sun Jan 19 2025 Alain Knaff <alain@knaff.lu>
 - fixed some of the manpage issues reported by manpage-l10n
 - unix-dir copying on Windows fix
