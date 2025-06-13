@@ -894,13 +894,13 @@ static int get_block_geom(int fd, struct device *dev) {
 	uint32_t sect_per_track;
 
 	if (ioctl(fd, HDIO_GETGEO, &geom) < 0) {
-		fprintf(stderr, "Could not get geometry of device (%s)",
+		fprintf(stderr, "Could not get geometry of device (%s)\n",
 			strerror(errno));
 		return -1;
 	}
 
 	if (ioctl(fd, BLKGETSIZE, &size) < 0) {
-		fprintf(stderr, "Could not get size of device (%s)",
+		fprintf(stderr, "Could not get size of device (%s)\n",
 			strerror(errno));
 		return -1;
 	}
