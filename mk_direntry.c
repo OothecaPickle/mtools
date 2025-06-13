@@ -383,7 +383,8 @@ static inline clash_action get_slots(Stream_t *Dir,
 					ch->source_entry,
 					pessimisticShortRename &&
 					ch->use_longname,
-					ch->use_longname)) {
+					ch->use_longname,
+					ch->is_label)) {
 			case -1:
 				return NAMEMATCH_ERROR;
 

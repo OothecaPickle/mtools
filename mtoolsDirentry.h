@@ -89,5 +89,6 @@ int lookupForInsert(Stream_t *Dir,
 		    int ignore_entry,
 		    int source_entry,
 		    int pessimisticShortRename,
-		    int use_longname);
+		    int use_longname,
+		    int ignore_match);
 #endif

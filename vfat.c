@@ -795,10 +795,11 @@ int lookupForInsert(Stream_t *Dir,
 		    int ignore_entry,
 		    int source_entry,
 		    int pessimisticShortRename,
-		    int use_longname)
+		    int use_longname,
+		    int ignore_match)
 {
 	direntry_t entry;
-	int ignore_match;
+	int ignore_short_match;
 	dirCacheEntry_t *dce;
 	dirCache_t *cache;
 	unsigned int pos; /* position _before_ the next answered entry */
@@ -809,7 +810,7 @@ int lookupForInsert(Stream_t *Dir,
 	native_to_wchar(longname, wlongname, MAX_VNAMELEN+1, 0, 0);
 	clear_scan(wlongname, use_longname, ssp);
 
-	ignore_match = (ignore_entry == -2 );
+	ignore_short_match = (ignore_entry == -2 ) || ignore_match;
 
 	initializeDirentry(&entry, Dir);
 	ssp->match_free = 0;
@@ -823,14 +824,14 @@ int lookupForInsert(Stream_t *Dir,
 		exit(1);
 	}
 
-	if(!ignore_match)
+	if(!ignore_short_match)
 		unix_name(cp, dosname->base, dosname->ext, 0, shortName);
 
 	pos = cache->nrHashed;
 	if(source_entry >= 0 ||
 	   (pos && isHashed(cache, wlongname))) {
 		pos = 0;
-	} else if(pos && !ignore_match && isHashed(cache, shortName)) {
+	} else if(pos && !ignore_short_match && isHashed(cache, shortName)) {
 		if(pessimisticShortRename) {
 			ssp->shortmatch = -2;
 			return 1;
@@ -857,6 +858,9 @@ int lookupForInsert(Stream_t *Dir,
 				    ((signed int)dce->endSlot-1==ignore_entry))
 					break;
 
+				if(ignore_match)
+				    break;
+
 				/* check long name */
 				if((dce->longName &&
 				    !wcscasecmp(dce->longName, wlongname)) ||
@@ -873,7 +877,7 @@ int lookupForInsert(Stream_t *Dir,
 
 				/* Long name or not, always check for
 				 * short name match */
-				if (!ignore_match &&
+				if (!ignore_short_match &&
 				    !wcscasecmp(shortName, dce->shortName))
 					ssp->shortmatch =
 						(int) (dce->endSlot - 1);
