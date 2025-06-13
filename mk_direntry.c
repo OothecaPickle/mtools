@@ -654,6 +654,15 @@ int mwrite_one(Stream_t *Dir,
 	char *shortname;
 	int ret;
 
+	/* Enforce maximal filename length. Without this, overlong
+	 * filenames would get truncated silently, disabling clash
+	 * detection (because mtools would still look for the overlong
+	 * variant to test whether the new name is already there) */
+	if (strlen(_argname) > 255) {
+	    fprintf(stderr, "File name too long\n");
+	    return -1;
+	} 
+
 	if(_argname)
 		argname = strdup(_argname);
 	else
