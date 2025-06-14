@@ -659,7 +659,7 @@ int mwrite_one(Stream_t *Dir,
 	 * filenames would get truncated silently, disabling clash
 	 * detection (because mtools would still look for the overlong
 	 * variant to test whether the new name is already there) */
-	if (strlen(_argname) > 255) {
+	if (strlen(_argname) > MAX_VNAMELEN) {
 	    fprintf(stderr, "File name too long\n");
 	    return -1;
 	} 
