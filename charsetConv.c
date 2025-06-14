@@ -430,8 +430,10 @@ size_t native_to_wchar(const char *native, wchar_t *wchar, size_t len,
 	unsigned int i;
 	memset(&ps, 0, sizeof(ps));
 
-	for(i=0; i<len && (native < end || !end); i++) {
-		size_t r = mbrtowc(wchar+i, native, len, &ps);
+	if(end == NULL)
+	    end = native+strlen(native);
+	for(i=0; i<len && native < end; i++) {
+		size_t r = mbrtowc(wchar+i, native, end-native, &ps);
 		if(r == (size_t) -1) {
 			/* Unconvertible character. Just pretend it's Latin1
 			   encoded (if valid Latin1 character) or substitute
@@ -445,6 +447,9 @@ size_t native_to_wchar(const char *native, wchar_t *wchar, size_t len,
 			memset(&ps, 0, sizeof(ps));
 			r=1;
 		}
+		if(r == (size_t) -2)
+		    /* incomplete final sequence => finish and ignore */
+		    break;
 		if(r == 0)
 			break;
 		native += r;

@@ -790,7 +790,7 @@ static void clear_scan(wchar_t *longname, int use_longname,
 int lookupForInsert(Stream_t *Dir,
 		    struct direntry_t *direntry,
 		    dos_name_t *dosname,
-		    char *longname,
+		    const char *longname,
 		    struct scan_state *ssp,
 		    int ignore_entry,
 		    int source_entry,
@@ -804,10 +804,17 @@ int lookupForInsert(Stream_t *Dir,
 	dirCache_t *cache;
 	unsigned int pos; /* position _before_ the next answered entry */
 	wchar_t shortName[13];
-	wchar_t wlongname[MAX_VNAMELEN+1];
+	wchar_t wlongname[MAX_VNAMELEN+2];
 	doscp_t *cp = GET_DOSCONVERT(Dir);
 
-	native_to_wchar(longname, wlongname, MAX_VNAMELEN+1, 0, 0);
+	/* Deliberately convert one character too much in order
+	 * to catch file names that are too long */
+	if(native_to_wchar(longname, wlongname, MAX_VNAMELEN+1, 0, 0) >
+	   MAX_VNAMELEN) {
+	    fprintf(stderr, "Name %s too long\n", longname);
+	    return 0; /* Single file error */
+	}
+	    
 	clear_scan(wlongname, use_longname, ssp);
 
 	ignore_short_match = (ignore_entry == -2 ) || ignore_match;
