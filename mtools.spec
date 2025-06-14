@@ -1,7 +1,7 @@
 %define _binary_payload w9.gzdio
 Name:           mtools
 Summary:        mtools, read/write/list/format DOS disks under Unix
-Version:        4.0.48
+Version:        4.0.49
 Release:        1
 License:        GPLv3+
 Group:          Utilities/System
@@ -135,6 +135,17 @@ if [ -f %{_bindir}/install-info ] ; then
 fi
 
 %changelog
+* Sat Jun 14 2025 Alain Knaff <alain@knaff.lu>
+- Correctly detect overlong file names, especially when
+  multibyte (UTF-8) strings are concerned
+- Fix off-by-one error in 2 calls to native_to_wchar
+- When changing disk label, ignore any plain file which would
+  match label
+- Added missing newlines in error messages about disk geometry
+- Do not print error message if getting geometry is simply not
+  supported by device type (such as for loop devices)
+- If full geometry of a device is not available (such as for
+  loop devices), at least make use of the size
 * Sat Feb 22 2025 Alain Knaff <alain@knaff.lu>
 - portability fixes, mostly for Watcom compiler
 - cleaned up some other warnings

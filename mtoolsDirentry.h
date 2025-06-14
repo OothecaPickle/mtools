@@ -84,10 +84,11 @@ void dosnameToDirentry(const struct dos_name_t *n, struct directory *dir);
 int lookupForInsert(Stream_t *Dir,
 		    direntry_t *direntry,
 		    struct dos_name_t *dosname,
-		    char *longname,
+		    const char *longname,
 		    struct scan_state *ssp,
 		    int ignore_entry,
 		    int source_entry,
 		    int pessimisticShortRename,
-		    int use_longname);
+		    int use_longname,
+		    int ignore_match);
 #endif
