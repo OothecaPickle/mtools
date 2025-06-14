@@ -316,7 +316,7 @@ unsigned int write_vfat(Stream_t *Dir, dos_name_t *shortname, char *longname,
 		       vse->sum,shortname->base,shortname->ext);
 #endif
 
-		wlen = native_to_wchar(longname, wlongname, MAX_VNAMELEN+1,
+		wlen = native_to_wchar(longname, wlongname, MAX_VNAMELEN,
 				       0, 0);
 		num_vses = (uint8_t)((wlen + VSE_NAMELEN - 1)/VSE_NAMELEN);
 		for (vse_id = num_vses; vse_id; --vse_id) {
