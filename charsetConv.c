@@ -431,7 +431,7 @@ size_t native_to_wchar(const char *native, wchar_t *wchar, size_t len,
 	memset(&ps, 0, sizeof(ps));
 
 	if(end == NULL)
-	    end = native+strlen(native);
+		end = native+strlen(native);
 	for(i=0; i<len && native < end; i++) {
 		size_t r = mbrtowc(wchar+i, native, (size_t)(end-native), &ps);
 		if(r == (size_t) -1) {
