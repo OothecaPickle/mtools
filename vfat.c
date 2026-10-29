@@ -396,7 +396,7 @@ static inline void parse_vses(direntry_t *entry,
 
 	id = vse->id & VSE_MASK;
 	last_flag = (vse->id & VSE_LAST);
-	if (id > MAX_VFAT_SUBENTRIES) {
+	if (id < 1 || id > MAX_VFAT_SUBENTRIES) {
 		fprintf(stderr, "parse_vses: invalid VSE ID %d at %d.\n",
 			id, entry->entry);
 		return;
