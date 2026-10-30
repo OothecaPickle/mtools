@@ -135,7 +135,7 @@ static inline clash_action ask_namematch(doscp_t *cp,
 	/**
 	 * Name to be printed
 	 */
-	char *name;
+	const char *name;
 
 #define EXISTS 0
 #define RESERVED 1
@@ -316,7 +316,7 @@ static int contains_illegals(const char *string, const char *illegals,
 	return 0;
 }
 
-static int is_reserved(char *ans, int islong)
+static int is_reserved(const char *ans, int islong)
 {
 	unsigned int i;
 	static const char *dev3[] = {"CON", "AUX", "PRN", "NUL", "   "};
@@ -383,7 +383,8 @@ static inline clash_action get_slots(Stream_t *Dir,
 					ch->source_entry,
 					pessimisticShortRename &&
 					ch->use_longname,
-					ch->use_longname)) {
+					ch->use_longname,
+					ch->is_label)) {
 			case -1:
 				return NAMEMATCH_ERROR;
 
@@ -537,7 +538,7 @@ static int mt_mwrite_one(Stream_t *Dir,
 			 void *arg,
 			 ClashHandling_t *ch)
 {
-	char longname[VBUFSIZE];
+	char longname[MAX_VNAMELEN_MB+1];
 	const char *dstname;
 	dos_name_t dosname;
 	int expanded;
@@ -576,7 +577,7 @@ static int mt_mwrite_one(Stream_t *Dir,
 	}
 
 	/* Copy original argument dstname to working value longname */
-	strncpy(longname, dstname, VBUFSIZE-1);
+	strncpy(longname, dstname, MAX_VNAMELEN_MB);
 
 	if(shortname) {
 		ch->use_longname =
@@ -653,15 +654,6 @@ int mwrite_one(Stream_t *Dir,
 	char *argname;
 	char *shortname;
 	int ret;
-
-	/* Enforce maximal filename length. Without this, overlong
-	 * filenames would get truncated silently, disabling clash
-	 * detection (because mtools would still look for the overlong
-	 * variant to test whether the new name is already there) */
-	if (strlen(_argname) > 255) {
-	    fprintf(stderr, "File name too long\n");
-	    return -1;
-	} 
 
 	if(_argname)
 		argname = strdup(_argname);

@@ -31,6 +31,9 @@
 /* Max legal length of a VFAT long name */
 #define MAX_VNAMELEN (255)
 
+/* Max length of VFAT long name in multibyte string */
+#define MAX_VNAMELEN_MB (5*MAX_VNAMELEN)
+
 #include "stream.h"
 
 struct scan_state {

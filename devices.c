@@ -893,15 +893,18 @@ static int get_block_geom(int fd, struct device *dev) {
 	uint16_t sectors=dev->sectors;
 	uint32_t sect_per_track;
 
-	if (ioctl(fd, HDIO_GETGEO, &geom) < 0) {
-		fprintf(stderr, "Could not get geometry of device (%s)\n",
+	if (ioctl(fd, BLKGETSIZE, &size) < 0) {
+		fprintf(stderr, "Could not get size of device (%s)\n",
 			strerror(errno));
 		return -1;
 	}
 
-	if (ioctl(fd, BLKGETSIZE, &size) < 0) {
-		fprintf(stderr, "Could not get size of device (%s)\n",
-			strerror(errno));
+	if (ioctl(fd, HDIO_GETGEO, &geom) < 0) {
+		dev->tot_sectors = ulong_to_sectors(size);
+		if(errno != ENOTTY)
+			fprintf(stderr,
+				"Could not get geometry of device (%s)\n",
+				strerror(errno));
 		return -1;
 	}
 
