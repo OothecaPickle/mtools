@@ -1,3 +1,5 @@
+v4_0_50
+	- Fix CVE-2026-118384
 v4_0_49
 	- Correctly detect overlong file names, especially when
           multibyte (UTF-8) strings are concerned

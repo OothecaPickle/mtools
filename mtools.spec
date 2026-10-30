@@ -1,7 +1,7 @@
 %define _binary_payload w9.gzdio
 Name:           mtools
 Summary:        mtools, read/write/list/format DOS disks under Unix
-Version:        4.0.49
+Version:        4.0.50
 Release:        1
 License:        GPLv3+
 Group:          Utilities/System
@@ -135,6 +135,8 @@ if [ -f %{_bindir}/install-info ] ; then
 fi
 
 %changelog
+* Fri Oct 30 2026 Alain Knaff <alain@knaff.lu>
+- Fix CVE-2026-118384
 * Sat Jun 14 2025 Alain Knaff <alain@knaff.lu>
 - Correctly detect overlong file names, especially when
   multibyte (UTF-8) strings are concerned

@@ -1,3 +1,7 @@
+mtools (4.0.50) stable; urgency=low
+  * Fix CVE-2026-118384
+
+ -- Alain Knaff <alain@knaff.lu>  Fri, 30 Oct 2026 00:05:25 +0100
 mtools (4.0.49) stable; urgency=low
   * Correctly detect overlong file names, especially when
     multibyte (UTF-8) strings are concerned
